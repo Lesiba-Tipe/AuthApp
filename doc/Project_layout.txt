@@ -1,0 +1,15 @@
+AUTHENTICATION > The process for identifying user <Username_Password>
+ client > controller > service > userDatabase
+
+Controllers
+  * AccountController
+  
+Service
+  * AccountService
+  
+ 
+ C# Library
+  * UserManager
+  
+ [Task_001]
+  impliment login (plain)
