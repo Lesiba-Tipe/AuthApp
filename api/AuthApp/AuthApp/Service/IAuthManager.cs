@@ -1,4 +1,5 @@
-﻿using AuthApp.Entity;
+﻿using AuthApp.Dto;
+using AuthApp.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace AuthApp.Service
 {
     public interface IAuthManager
     {
-        Task<bool> validateUser(User user);
+        Task<bool> ValidateUser(LogInDto user);
+
+        string GenerateJwtToken(string id);
     }
 }

@@ -26,7 +26,7 @@ namespace Authentication.Test
             
 
             //Act
-            var isValid = await authManager.validateUser(user);
+            var isValid = await authManager.ValidateUser(user);
 
             //Assert
             //Assert.False(isValid, $"The password {password} should not be valid!");
