@@ -24,7 +24,7 @@ namespace AuthApp.Service
         public string GenerateJwtToken(string id)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("fqhhLNdRJRKE4FbbiFMYHNybkI4qHZLb");
+            var key = Encoding.ASCII.GetBytes("fqhhLNdRJRKE4FbbiFMYHNybkI4qHZLb");  
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
