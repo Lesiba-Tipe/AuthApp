@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AuthApp.Dto
 {
@@ -11,21 +8,15 @@ namespace AuthApp.Dto
         public string Password { get; set; }
     }
 
-    public class UserDto
+    public class UserDto : LogInDto
     {
         //public string Id { get; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public string Email { get; set; }
+        public string Username { get; set; }
         public string PhoneNumber { get; set; }
         public ICollection<string> Roles { get; set; }
-        
+
     }
 
-    public class AccountDto : LogInDto
-    {
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public ICollection<string> Roles { get; set; }
-    }
 }

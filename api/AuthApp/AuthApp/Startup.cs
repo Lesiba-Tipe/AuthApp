@@ -59,11 +59,11 @@ namespace AuthApp
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidateAudience = true,
+                        ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = "AuthApp",                                    //Use AppSettings
-                        ValidAudience = "https://localhost:44331/api/",             //Use AppSettings
+                        //ValidAudience = "https://localhost:44331/api/",             //Use AppSettings
                         IssuerSigningKey = new SymmetricSecurityKey(secret_key)     //Use AppSettings
                     };
                 }
@@ -106,7 +106,10 @@ namespace AuthApp
                 }});
 
             });
-            
+
+            // Enable CORS
+            services.AddCors();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,6 +121,11 @@ namespace AuthApp
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            });
 
             app.UseRouting();
 
@@ -136,6 +144,8 @@ namespace AuthApp
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API V1");
             });
+
+           
         }
     }
 }

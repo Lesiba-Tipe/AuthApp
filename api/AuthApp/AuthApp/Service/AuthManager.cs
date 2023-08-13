@@ -21,29 +21,17 @@ namespace AuthApp.Service
             this.userManager = userManager;
         }
 
-        public string GenerateJwtToken(string id)
+        public async Task<string> GenerateJwtToken()
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("fqhhLNdRJRKE4FbbiFMYHNybkI4qHZLb");  
+            var key = Encoding.ASCII.GetBytes("fqhhLNdRJRKE4FbbiFMYHNybkI4qHZLb");
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
+            var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+            var claims = await GetClaims();
+            var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
 
-                Subject = new ClaimsIdentity(new Claim[] 
-                    { 
-                        new Claim(ClaimTypes.Name, id), 
-                        new Claim(ClaimTypes.Role, "User")
-                    }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
-                Issuer = "AuthApp",
-                Audience = "https://localhost:44331/api/",
-                
-            };
+            var results = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return $"Bearer { tokenHandler.WriteToken(token)}";
+            return results;
         }
 
         public async Task<bool> ValidateUser(LogInDto _user)
@@ -70,6 +58,23 @@ namespace AuthApp.Service
 
             return claims;
         }
-        
+
+        private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
+        {
+            //var jwtSettings = _config.GetSection("JwtOptions");
+
+            //var expiration = DateTime.Now.AddMinutes(Convert.ToInt32(jwtSettings.GetSection("LifeTime").Value));
+
+            var token = new JwtSecurityToken(
+                issuer: "AuthApp",
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: signingCredentials
+                );
+
+            return token;
+        }
+
+
     }
 }

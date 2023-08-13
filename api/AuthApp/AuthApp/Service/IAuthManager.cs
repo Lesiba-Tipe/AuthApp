@@ -11,6 +11,6 @@ namespace AuthApp.Service
     {
         Task<bool> ValidateUser(LogInDto user);
 
-        string GenerateJwtToken(string id);
+        Task<string> GenerateJwtToken();
     }
 }

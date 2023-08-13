@@ -1,0 +1,25 @@
+<div class="nav-bar justify-content-between">
+    <div class="company">
+        <ul>
+          <img style="height: 100%; width: 50%; " src="./assets/img/logo-Asset 2@72x.png" class=" rounded mx-auto d-block" alt="logo">
+          
+          <!-- <li><a style="height: auto; width: 50%; " src="./assets/img/logo-Asset 2@72x.png" class=" rounded mx-auto d-block" alt="logo"></a></li>             -->
+          <!-- <li><a class="bi bi-list"></a></li>             -->
+            <li><a class="bi bi-house-add-fill">Tipe Graphics</a></li>
+          </ul> 
+    </div>
+    <div class="admin">
+        <ul>
+            <li><a class="bi bi-person-plus-fill"></a></li>
+            <li><a class="bi bi-people-fill"></a></li>
+          </ul> 
+    </div>
+
+    <div class="profile">
+        <ul>
+          <li><a class="bi bi-person-fill">{{profile.firstname}} {{profile.lastname}}</a></li>
+          <li><a (click)="logout()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout" class="bi bi-box-arrow-left"></a></li>
+        </ul> 
+    </div>
+
+ </div>

@@ -27,7 +27,6 @@ namespace AuthApp.Controllers
             this.userManager = userManager;
         }
 
-        //[AllowAnonymous]
         [HttpGet("users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -37,7 +36,6 @@ namespace AuthApp.Controllers
             return await GetAllUser();
         }
 
-        //[Route("getuser")]
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(string id)
         {
@@ -64,9 +62,18 @@ namespace AuthApp.Controllers
 
         [HttpPut("{id}")]
         //[Route("update")]
-        public async Task<ActionResult<UserDto>> UpdateUser(string id)
+        public async Task<ActionResult<UserDto>> UpdateUser(string id, UserDto userDto)
         {
             var user = new User();
+
+            //Map Data
+            var _user = new User()
+            {
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            };
 
             if (id != user.Id)
                 return BadRequest();
@@ -97,5 +104,6 @@ namespace AuthApp.Controllers
         {
             return (context.Users?.Any(user => user.Email == email)).GetValueOrDefault();
         }
+
     }
 }

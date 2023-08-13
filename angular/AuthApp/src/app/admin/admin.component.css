@@ -1,0 +1,31 @@
+/* Primary-color: #222b45; */
+
+  .table-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
+  }
+  table{
+    margin-top: 20px;
+  }
+
+  .table {
+    --bs-table-color: #fff;
+    --bs-table-bg: transparent;
+    --bs-table-border-color: #fff;
+    --bs-table-accent-bg: #222b45;
+    --bs-table-striped-color: #fff;
+    --bs-table-striped-bg: #283252;
+    --bs-table-active-color: white;
+    --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+    --bs-table-hover-color: white;
+    --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+    width: 75%;
+    margin-bottom: 1rem;
+    color: var(--bs-table-color);
+    vertical-align: top;
+    border-color: var(--bs-table-border-color);
+  }
+
+

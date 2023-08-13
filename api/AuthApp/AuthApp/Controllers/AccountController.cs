@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AuthApp.Controllers
@@ -44,7 +45,7 @@ namespace AuthApp.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Register([FromBody] User userDto)
+        public async Task<IActionResult> Register([FromBody] UserDto userDto)
         {
             logger.LogInformation($"Registration attempt for {userDto.Email}");
 
@@ -52,12 +53,22 @@ namespace AuthApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //map data
-            //userDto.PasswordHash = "Mildret@10";
+            //map User data
+
+            var user = new User()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Firstname = userDto.Firstname,
+                Lastname = userDto.Lastname,
+                Email = userDto.Email,
+                PhoneNumber = userDto.PhoneNumber,
+                UserName = userDto.Password
+            };
+
             try
             {
                 //var user = mapper.Map<User>(userDto);
-                var results = await userManager.CreateAsync(userDto, userDto.PasswordHash);
+                var results = await userManager.CreateAsync(user, userDto.Password);
 
                 if (!results.Succeeded)
                 {
@@ -67,15 +78,30 @@ namespace AuthApp.Controllers
                     }
                     return BadRequest(ModelState);
                 }
+
                 
-                return Accepted(userDto);
+                var roles = new List<string>();
+                if (userDto.Roles == null)
+                {
+                    roles.Add("User");   //Set Default Role if Null
+                }
+                else
+                {
+                    foreach (var role in userDto.Roles)
+                    {
+                        roles.Add(role);
+                    }
+                }
+                
+                await userManager.AddToRolesAsync(user, roles);
+
+                return Accepted(user);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, $"something went wrong {nameof(Register)}");
                 return StatusCode(500, $"Internl server Error");
             }
-
         }
 
 
@@ -97,8 +123,14 @@ namespace AuthApp.Controllers
                     return Unauthorized();
                 }
                 var user = await userManager.FindByEmailAsync(userDto.Email);
+                var roles = await userManager.GetRolesAsync(user);
 
-                return Accepted(authManager.GenerateJwtToken(userDto.Email));  //Return Authorization here...
+                //var token = 
+                var results = new { jwtToken = "Bearer " + await authManager.GenerateJwtToken(), roles = roles, id = user.Id };
+
+                return Accepted(results);
+
+                //return Accepted(results);  //Return Authorization here...
             }
             catch (Exception ex)
             {
