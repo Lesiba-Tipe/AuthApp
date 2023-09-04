@@ -7,7 +7,9 @@
     padding-right: 50px;
     padding-bottom: 10px;
     width: 100%;
-    background-color: #283252;
+    background-color: white;
+    position: fixed;
+    /* background-color: #283252; */
   }
 
 ul {
@@ -33,8 +35,39 @@ ul {
   
   /* Change the link color to #111 (black) on hover */
   li a:hover {
-    background-color: #111;
+    background-color: #d3d3d3;
+    color: #1E5099;
   }
 
+/* Style the sidebar - fixed full height */
+.sidebar {
+  height: 100%; 
+  margin-top: 5rem;
+  width: 10rem;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(255, 255, 255);
+  overflow-x: hidden;
+  padding-top: 16px;
+}
+
+/* Style sidebar links */
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  /* font-size: 14px; */
+  color: #ffffff;
+  display: block;
+  margin-bottom: 1px;
+  background-color: #222b45;
+}
+
+/* Style links on mouse-over */
+.sidebar a:hover {
+  background-color: #d3d3d3;
+  color: #1E5099;
+}
 
 

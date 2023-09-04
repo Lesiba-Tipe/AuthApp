@@ -1,0 +1,89 @@
+/* Primary-color: #222b45; */
+
+.frame{
+    display: flex;
+    flex-direction: column;
+    row-gap: .7rem;
+    align-items: center;
+    background-color: bisque;
+    margin-top: 5rem;
+    margin-left: 10.3rem;
+  }
+  
+  .admin-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    margin-top: .7rem;
+    background-color: blueviolet;
+  }
+  
+  .mat-header -cell{
+      background-color: #2E395E;
+  }
+  
+  .mat-column-lastnames{
+      width: 100%;
+      color: rgb(146, 69, 69);     
+  }
+  
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* background-color: #222b45; */
+  }
+  
+  li {
+    float: left;
+    border-left: 1px solid #bbb;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    /* padding: 14px 16px; */
+    text-decoration: none;
+  }
+  .bi-person-fill-add{
+    font-size: 1.8rem;
+  }
+  li a:hover {
+    /* background-color: #d3d3d3; */
+    color: #1E5099;
+  }
+  
+  .sign-in-form{
+    width: 100%;
+  }
+  
+  .margin-top{
+    margin-top: 20px;   
+  }
+  
+  /* clickable-table.component.css */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  tr.mat-row {
+    cursor: pointer;
+  }
+  
+  tr.mat-row:hover {
+    background-color: #8f1c1c; /* Change to your preferred hover color */
+  }
+
+  .modal-body{
+    display: grid;
+    grid-column: 1fr 2fr;
+  }
+  

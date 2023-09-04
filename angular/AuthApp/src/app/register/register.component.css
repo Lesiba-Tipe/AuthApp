@@ -10,6 +10,7 @@
     min-height: 100vh;
     background-color: #222b45; /* Optional: Just for visualization */   
     color: #222b45;
+    
 }
 
 .forms-container{
@@ -40,4 +41,9 @@
 }
 input{
     text-align: center;
+}
+
+h2,h4{
+    color:#222b45;
+    /* font-family: 'Century Gothic'; */
 }

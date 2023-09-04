@@ -12,6 +12,6 @@ export class ProfileService {
   }
 
   getUser(): any{
-    return this.profile;
+    return this.profile; 
   }
 }

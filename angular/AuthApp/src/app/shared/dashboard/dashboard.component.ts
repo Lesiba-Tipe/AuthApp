@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthGuard } from 'src/app/auth/auth.gard';
 import { AuthService } from 'src/app/service/auth-service.service';
 import { ProfileService } from 'src/app/service/profile.service';
@@ -13,7 +12,7 @@ import { UserService } from 'src/app/service/user-service.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  private _profile$!: Observable<any>;
+
   profile: any = {} as any;
 
   constructor(
@@ -23,24 +22,13 @@ export class DashboardComponent implements OnInit {
     private authGard: AuthGuard,
     private profileService: ProfileService
     ) 
-    { }
+    { 
+      console.log('ngOnit(): DashboardComponent:', this.profileService.getUser());
+      this.profile = this.profileService.getUser();  
+    }
 
   ngOnInit(): void {
-
-    if(this.authGard){
-      this._profile$ = this.userService.getUserById(this.authService.getId());
-
-      this._profile$.subscribe(
-        (response: any) => {
-          console.log(response)
-          this.profileService.setUser(response);
-          this.profile = this.profileService.getUser();
-        },
-        (error) =>{
-          console.log(error)
-        }
-      );      
-    }
+    
   }
 
   public isLoggedIn() {

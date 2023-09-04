@@ -3,25 +3,25 @@
 
       <div class="signin-signup">
         
-        <img style="height: auto; width: 40%; " src="./assets/img/logo-Asset 2@72x.png" class=" rounded mx-auto d-block" alt="logo">
+        <img style="height: auto; width: 40%; " src="/assets/img/logo-Asset272x.png" class=" rounded mx-auto d-block" alt="logo">
 
-        <h2 class="title margin-top" style="color:#222b45; " >Aero Space Portal</h2>
+        <h2 class="title margin-top" >Aero Space Portal</h2>
+        <h4 class="margin-top" >Register</h4>
 
-        <h5 class="margin-top" style="color:#222b45;" >Register</h5>
-
-        <form  #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="sign-in-form margin-top" >
+        <form [formGroup]="formGroupRegister" (ngSubmit)="register()" class="sign-in-form margin-top">
+          <!-- <form [formGroup]="formGroupRegister"  #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="sign-in-form margin-top"> -->
 
           <div class="row">
             <div class="col-6">
               <div class="input-field">
                 
-                <input  type="text" ngModel name="firstName" id="FirstName" placeholder="Firstname" class="form-control" aria-label="Firstname" />
+                <input formControlName="firstname"  type="text"  id="FirstName" placeholder="Firstname" class="form-control" aria-label="Firstname" />
               </div>
             </div>
             <div class="col-6">
               <div class="input-field">
                 
-                <input type="text" ngModel name="lastName" id="Lastname" placeholder="Lastname" class="form-control" />
+                <input formControlName="lastname" type="text" id="Lastname" placeholder="Lastname" class="form-control" />
               </div>	
             </div>	
           </div>	
@@ -30,13 +30,13 @@
             <div class="col-6">
               <div class="input-field">
                 
-                <input type="email" ngModel name="email" id="Email" placeholder="Email" class="form-control" />
+                <input formControlName="email" type="email"  id="Email" placeholder="Email" class="form-control" />
               </div>
             </div>
             <div class="col-6">
               <div class="input-field">
                 
-                <input type="phonenumber" ngModel name="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control" />
+                <input formControlName="phoneNumber" type="number" ngModel  id="phoneNumber" placeholder="Phone number" class="form-control" />
               </div>	
             </div>	
           </div>	
@@ -45,25 +45,31 @@
             <div class="col-6">
               <div class="input-field">
                 
-                <input type="password" ngModel name="password" id="Password" placeholder="Password" class="form-control" />
+                <input formControlName="password" type="password"  id="Password" placeholder="Password" class="form-control" />
               </div>
             </div>
             <div class="col-6">
               <div class="input-field">
                 
-                <input type="password" ngModel name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password" class="form-control" />
+                <input formControlName="confirmPassword" type="password"  id="ConfirmPassword" placeholder="Confirm password" class="form-control" />
               </div>	
             </div>	
           </div>	
-
 
           <div *ngIf="registeredSuccessfully" name="_alert" class="alert alert-success" id="login-error-alert">Registered Successfully!</div>
 
-          <input type="submit" value="Register" class="btn btn-primary margin-top login-btn">
+          <div *ngIf="formGroupRegister.hasError('passwordMismatch')">
+            Passwords do not match.
+          </div>
+
+          <input type="submit" [disabled]="formGroupRegister.invalid" value="Register" class="btn btn-primary margin-top login-btn">
           
         </form>
 
-        <a routerLink="/login" style="font-size: 15px;" class="margin-top">Do you have an account? Login here</a>
+        <div class="margin-top">
+          <a routerLink="/login" style="font-size: 15px;color: #222b45;" >Do you have an account? Login here</a>
+        </div>
+       
       </div>
 
   

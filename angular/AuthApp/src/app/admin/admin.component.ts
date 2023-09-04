@@ -4,6 +4,8 @@ import { AuthGuard } from '../auth/auth.gard';
 import { AuthService } from '../service/auth-service.service';
 import { ProfileService } from '../service/profile.service';
 import { UserService } from '../service/user-service.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -11,17 +13,7 @@ import { UserService } from '../service/user-service.service';
   styleUrls: ['./admin.component.css']
 })
 
-export class AdminComponent implements OnInit {
-  //
-  constructor(
-      private authGard: AuthGuard,
-    ) 
-    { }
-
-  ngOnInit(): void {
-
-    
-  }
-
+export class AdminComponent {
+  
 
 }

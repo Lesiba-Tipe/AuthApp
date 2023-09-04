@@ -2,10 +2,9 @@
     <div class="forms-container">
       <div class="signin-signup">
         
-        <img style="height: auto; width: 50%; " src="./assets/img/logo-Asset 2@72x.png" class=" rounded mx-auto d-block" alt="logo">
+        <img style="height: auto; width: 70%; " src="/assets/img/logo-Asset272x.png" class=" rounded mx-auto d-block" alt="logo">
 
         <h2 class="title margin-top" style="color:#222b45; " >Aero Space Portal</h2>
-
         <h5 class="margin-top" style="color:#222b45;" >Login</h5>
 
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="sign-in-form" >
@@ -21,13 +20,17 @@
 
           <input type="submit" value="Login" class="btn btn-primary margin-top login-btn">
 
-          <div *ngIf="invalidLogin" class="alert alert-danger margin-top" id="login-error-alert">invalid username or password</div>
-          
-          
+          <div *ngIf="invalidLogin" class="alert alert-danger margin-top" id="login-error-alert">Invalid username or password</div>
+       
         </form>
 
-        <a routerLink="/register" style="font-size: 15px; text-align: center;" class="row margin-top">Are you new? Register here</a>
-        <a routerLink="/" class="row" style="font-size: 15px;">Forgot Password? Reset here</a>
+        <div class="row margin-top">
+          <a routerLink="/register" style="font-size: 15px;color: #222b45;">Are you new? Register here</a>
+        </div>
+
+        <div class="row" style="margin-top:5px" >
+          <a routerLink="/" style="font-size: 15px;color: #222b45;">Forgot Password? Reset here</a>
+        </div>
 
       </div>
     </div>

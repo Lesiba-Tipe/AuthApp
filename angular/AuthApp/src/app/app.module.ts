@@ -18,6 +18,11 @@ import { AuthGuard } from './auth/auth.gard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { DashboardComponent } from './shared/dashboard/dashboard.component';
 import { RegisterComponent } from './register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { ListUserComponent } from './list-user/list-user.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 
 @NgModule({
@@ -29,12 +34,18 @@ import { RegisterComponent } from './register/register.component';
     AdminComponent,
     ForbiddenComponent,
     RegisterComponent,
+    ListUserComponent,
+    ProfileComponent,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
     ReactiveFormsModule
   ],
   providers: [

@@ -5,11 +5,7 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthGuard } from '../auth/auth.gard';
 import { ProfileService } from '../service/profile.service';
-
-
-declare const sign_in_btn:any;
-declare const mySignInbtn:any;
-
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +18,8 @@ export class LoginComponent {
   registeredSuccessfully: boolean = false;
   public response!: { dbPath: ''; };
 
+  private _profile$!: Observable<any>;
+  profile: any = {} as any;
 
   constructor(
     private userService: UserService,
@@ -31,15 +29,8 @@ export class LoginComponent {
     private profileService: ProfileService
   ) {}
 
-  
-  signIn() {
-    mySignInbtn();
-    sign_in_btn();
-  };
 
   ngOnInit(): void {}
-
-  //testeRoute(loginForm: NgForm){this.router.navigate(['/admin']);}
 
   login(loginForms: NgForm) {
     console.log('log-in button pressed.... ')
@@ -56,6 +47,7 @@ export class LoginComponent {
 
         const role = response.roles[0];
 
+        this.initilize_Profile()
 
         if(role === 'Admin') {
           this.router.navigate(['/admin']);
@@ -64,19 +56,50 @@ export class LoginComponent {
         }
         
       },
-      (error) => {        
-       var displayErrorAlert = document.getElementById('login-error-alert');      
-       if(displayErrorAlert){ displayErrorAlert.style.display = "block"; }
-       setTimeout(() => {
-         if(displayErrorAlert) { displayErrorAlert.style.display = "none"; }
-       }, 5000);
-  
-       this.invalidLogin = true;  
-       console.log('See error: ', error)
+      (error) => {   
+      
+        if(error.status === 0)
+        {
+            alert('Server is not available, Please try again later');
+        }
+        else{
+          var displayErrorAlert = document.getElementById('login-error-alert');   
+
+          if(displayErrorAlert){ 
+            displayErrorAlert.style.display = "block";           
+          }
+
+          setTimeout(() => {
+            if(displayErrorAlert) { 
+              displayErrorAlert.style.display = "none"; 
+            }
+          }, 5000);
+
+          this.invalidLogin = true; 
+
+          console.log('STATUS: ', error.status)
+          console.log('ERROR: ', error)
+        }
       }
     );
   }
 
+  initilize_Profile(){
+    if(this.authGard){
+      this._profile$ = this.userService.getUserById(this.authService.getId());
+      
+      this._profile$.subscribe(
+        (response: any) => {
+          console.log('Initilize Response: ',response)
+          this.profileService.setUser(response);
+          this.profile = this.profileService.getUser();
+        },
+        (error) =>{
+          console.log('Failed to get Profile by Id: ',error);
+        }
+      );      
+    }
+  }
 
 
 }

@@ -1,0 +1,151 @@
+<app-dashboard></app-dashboard>
+
+<div class="frame">
+
+  <div class="admin-nav">
+    <div class="profile">
+      <ul>
+        <li><a href="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add User" class="bi bi-person-fill-add" data-bs-toggle="modal" data-bs-target="#exampleModal" ></a></li>
+      </ul> 
+  </div>
+  </div>
+
+  <div class="table-container">
+
+    <div>
+      <div class="mytable">
+  
+      <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8 table table-striped" >
+             
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td href="" mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="firstname">
+          <th mat-header-cell *matHeaderCellDef>Firstname</th>
+          <td href="" mat-cell *matCellDef="let row">{{ row.firstname }}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="lastname">
+          <th mat-header-cell *matHeaderCellDef>Lastname</th>
+          <td href="" mat-cell *matCellDef="let row">{{ row.lastname }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td href="" mat-cell *matCellDef="let row">{{ row.email }}</td>
+        </ng-container>
+      
+        <ng-container matColumnDef="phoneNumber">
+          <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+          <td href="" mat-cell *matCellDef="let row">{{ row.phoneNumber }}</td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="['id', 'firstname', 'lastname', 'email', 'phoneNumber']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'firstname', 'lastname', 'email', 'phoneNumber']" data-bs-toggle="modal" data-bs-target="#userDetailsModal" (click)="onRowClick(row)"  ></tr>
+
+      </table>
+  
+    </div>
+  </div>
+    
+  </div>
+
+<!-- Modal ADD USER-->
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Add new user</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        
+        <form  #addNewUserForm="ngForm" (ngSubmit)="addNewUser(addNewUserForm)" class="sign-in-form margin-top">
+          <div class="row">
+            <div class="col-6">
+              <div class="input-field">               
+                <input  type="text" ngModel name="firstName" id="FirstName" placeholder="Firstname" class="form-control" aria-label="Firstname" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-field">               
+                <input type="text" ngModel name="lastName" id="Lastname" placeholder="Lastname" class="form-control" />
+              </div>	
+            </div>	
+          </div>	
+
+          <div class="row margin-top">
+            <div class="col-6">
+              <div class="input-field">
+                
+                <input type="email" ngModel name="email" id="Email" placeholder="Email" class="form-control" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-field">
+                
+                <input type="phonenumber" ngModel name="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control" />
+              </div>	
+            </div>	
+          </div>	
+
+          <div class="row margin-top">
+            <div class="col-6">
+              <div class="input-field">
+                
+                <input type="password" ngModel name="password" id="Password" placeholder="Password" class="form-control" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-field">
+                
+                <input type="password" ngModel name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password" class="form-control" />
+              </div>	
+            </div>	
+          </div>	
+          
+          <div class="row margin-top modal-footer">
+            <input type="submit" class="btn btn-primary margin-top login-btn" value="Save" >
+          </div>
+
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal USER DETAILS -->
+<div *ngIf="user" class="modal fade " id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel">Personal Details</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="profile-pic col">
+          Profile pic
+
+
+        </div>
+
+        <div class="user-details col">
+
+          User Details
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
