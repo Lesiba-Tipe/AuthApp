@@ -1,11 +1,11 @@
-<div class="frame d-flex flex-column mb-3">
+<div class="d-flex flex-column mb-3">
   <div class="nav-bar justify-content-between">
     <div class="company">
-      <img style="height: auto; width: 50%; " src="/assets/img/logo-Asset272x.png" class=" rounded mx-auto d-block" alt="logo">
+      <img href="" style="height: auto; width: 50%; " src="/assets/img/logo-Asset272x.png" class=" rounded mx-auto d-block" alt="logo">
     </div>
     <div class="profile">
         <ul>
-          <li><a href="" routerLink="/profile" class="bi bi-person-fill">{{profile.firstname}} {{profile.lastname}}</a></li>
+          <li><a href="" routerLink="/profile" class="bi bi-person-fill"> {{profile.firstname}} {{profile.lastname}}</a></li>
           <li><a href="" (click)="logout()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout" class="bi bi-box-arrow-left"></a></li>
         </ul> 
     </div>
@@ -15,10 +15,10 @@
 
  <!-- The sidebar -->
 <div class="sidebar">
-  <a href="#home"><i class="fa fa-fw fa-home"></i> Home</a>
-  <a href="#services"><i class="fa fa-fw fa-wrench"></i> Services</a>
+  <a href="#home"><i class="bi bi-house-fill"></i> Home</a>
+  <a href="#services"><i class="bi bi-people-fill"></i> Services</a>
   <a routerLink="/users" href=""><i class="bi bi-people-fill"></i> Users</a>
-  <a href="#contact"><i class="fa fa-fw fa-envelope"></i> Contact</a>
+  <a href="#contact"><i class="bi bi-person-lines-fill"></i> Contact</a>
 </div>
 
 

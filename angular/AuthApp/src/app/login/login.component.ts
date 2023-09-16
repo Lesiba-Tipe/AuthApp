@@ -18,9 +18,6 @@ export class LoginComponent {
   registeredSuccessfully: boolean = false;
   public response!: { dbPath: ''; };
 
-  private _profile$!: Observable<any>;
-  profile: any = {} as any;
-
   constructor(
     private userService: UserService,
     private authService: AuthService,
@@ -46,8 +43,6 @@ export class LoginComponent {
         this.authService.setId(response.id);
 
         const role = response.roles[0];
-
-        this.initilize_Profile()
 
         if(role === 'Admin') {
           this.router.navigate(['/admin']);
@@ -82,23 +77,6 @@ export class LoginComponent {
         }
       }
     );
-  }
-
-  initilize_Profile(){
-    if(this.authGard){
-      this._profile$ = this.userService.getUserById(this.authService.getId());
-      
-      this._profile$.subscribe(
-        (response: any) => {
-          console.log('Initilize Response: ',response)
-          this.profileService.setUser(response);
-          this.profile = this.profileService.getUser();
-        },
-        (error) =>{
-          console.log('Failed to get Profile by Id: ',error);
-        }
-      );      
-    }
   }
 
 

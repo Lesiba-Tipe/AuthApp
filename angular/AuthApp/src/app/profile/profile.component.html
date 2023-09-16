@@ -1,3 +1,37 @@
 <app-dashboard></app-dashboard>
 
 
+<div class="frame justify-content-center d-flex flex-row mb-3">
+    <div class="profile-pic-group d-flex flex-row mb-3">
+        <div class="profile-pic align-content-center text-center d-flex flex-column mb-3">
+            <img src="" alt=""/>
+            <h3>{{profile.firstname}} {{profile.lastname.toLowerCase()}} </h3>
+            <p>@{{profile.username}}tipegraphics </p>
+        </div>
+    </div>
+
+    <div class="personal-details-group">
+
+        <div class="personal-details">
+            <h4>Personal Details</h4>
+            <div>
+                <p>Phone No: {{profile.phoneNumber}} </p>
+                <p>Email: {{profile.email}} </p>
+                <p>Gender: {{profile.gender}} </p>
+                <p>Physical Address: {{profile.physicalAddress}} </p>
+            </div>
+
+        </div>
+
+        <div class="company-details">
+            <h4>Employee Details</h4>
+            <div>
+                <p>Employee No: {{profile.employeeNo}} </p>
+                <p>Department: {{profile.deprtment}} </p>
+                <p>Branch: {{profile.branch}} </p>
+            </div>
+        </div>
+
+        <button class="btn button btn-primary" >Edit</button>
+    </div>
+</div>

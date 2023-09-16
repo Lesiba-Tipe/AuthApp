@@ -1,13 +1,9 @@
 /* Primary-color: #222b45; */
 
 .frame{
-    display: flex;
-    flex-direction: column;
-    row-gap: .7rem;
-    align-items: center;
-    background-color: bisque;
-    margin-top: 5rem;
-    margin-left: 10.3rem;
+
+    /* margin-top: 5rem; */
+    /* margin-left: 10.3rem; */
   }
   
   .admin-nav{

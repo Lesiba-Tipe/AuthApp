@@ -1,35 +1,32 @@
-.main-frame{
-    background-color: rgb(122, 122, 185);
-    width: 100%;
-    height: 100%;
-    margin-top: 5rem;
-    margin-left: 10.3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .frame{
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    width: auto;
+    width: 50%;
+    column-gap: 1em;
 }
-
-#profile-pic {
+.profile-pic {
     padding: 1rem;
-    background-color: coral;
 }
 
 
-#personal-info{
+.personal-details div, .company-details div{
+    width: 100%;
     background-color: darkcyan;
 
 }
-
-
+h3{
+    margin-bottom: 0px;
+    /* background-color: aliceblue; */
+}
+h4{
+    text-align: center;
+}
 img {
-    width: auto;
-    height: 100px;
+    width: 10em;
+    height: 10em;
     background-color: brown;
     border-radius: 50%;
+  }
+
+  .personal-details-group{
+    margin-bottom: .8rem;
+    row-gap: 1rem;
   }

@@ -13,16 +13,11 @@ export class ProfileComponent implements OnInit {
   constructor(
     private profileService: ProfileService
     ) 
-    { 
-
-
-    }
+    {}
 
 
   ngOnInit(): void {
     console.log('ngOnit(): ProfileComponent:', this.profileService.getUser());
-    this.profile = this.profileService.getUser();
+     this.profile = this.profileService.getUser();
   }
-
-
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthGuard } from 'src/app/auth/auth.gard';
 import { AuthService } from 'src/app/service/auth-service.service';
 import { ProfileService } from 'src/app/service/profile.service';
@@ -13,7 +14,9 @@ import { UserService } from 'src/app/service/user-service.service';
 })
 export class DashboardComponent implements OnInit {
 
+  private _profile$!: Observable<any>;
   profile: any = {} as any;
+  count = 0
 
   constructor(
     private router: Router,
@@ -22,13 +25,11 @@ export class DashboardComponent implements OnInit {
     private authGard: AuthGuard,
     private profileService: ProfileService
     ) 
-    { 
-      console.log('ngOnit(): DashboardComponent:', this.profileService.getUser());
-      this.profile = this.profileService.getUser();  
-    }
+    { }
 
   ngOnInit(): void {
-    
+    this.initilize_Profile()
+    console.log('ngOnInit(): DashboardComponent ',this.count++)
   }
 
   public isLoggedIn() {
@@ -40,8 +41,22 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  dashboard(){
-    console.log('This is dasboard....')
+  initilize_Profile(){
+    if(this.authGard){
+      this._profile$ = this.userService.getUserById(this.authService.getId());
+      
+      this._profile$.subscribe(
+        (response: any) => {
+          console.log('Initilize Response: ',response)
+          this.profileService.setUser(response);
+          this.profile = response;
+        },
+        (error) =>{
+          console.log('Failed to get Profile by Id: ',error);
+        }
+      );      
+    }
   }
+
 
 }

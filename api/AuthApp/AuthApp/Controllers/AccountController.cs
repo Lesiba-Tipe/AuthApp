@@ -23,12 +23,14 @@ namespace AuthApp.Controllers
         private readonly AuthBDContext context;
         private readonly UserManager<User> userManager;
         private readonly IAuthManager authManager;
+        private EmailConfirmService emailConfirmService;
 
         public AccountController(
             UserManager<User> userManager, 
             ILogger<AccountController> logger,
             AuthBDContext context,
             IAuthManager authManager
+            
             //IMapper mapper
             )
         {
@@ -37,6 +39,7 @@ namespace AuthApp.Controllers
             //this.mapper = mapper;
             this.context = context;
             this.authManager = authManager;
+            
         }
 
 
@@ -67,6 +70,14 @@ namespace AuthApp.Controllers
 
             try
             {
+
+                // Confirm Email
+                emailConfirmService = new EmailConfirmService();
+                EmailDto emailDto = new EmailDto(user.Firstname, new Random().Next(111111,999999));
+
+                emailConfirmService.SendEmail(emailDto, user.Email);
+
+
                 //var user = mapper.Map<User>(userDto);
                 var results = await userManager.CreateAsync(user, userDto.Password);
 

@@ -1,11 +1,19 @@
 
-
-
-
 html, body { 
     height: 100%; 
 }
 
 body { 
     margin: 0; 
-    font-family: 'Century Gothic'; }
+    font-family: 'Century Gothic'; 
+}
+
+.frame{
+    display: flex;
+    flex-direction: column;
+    row-gap: .7rem;
+    align-items: center;
+    background-color: rgb(151, 151, 151);
+    margin-left: 10.3rem;
+    margin-top: 5rem;
+}

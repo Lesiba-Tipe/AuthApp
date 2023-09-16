@@ -29,6 +29,14 @@ Service
   ]
 }
 
+  FEATURES
+    Third Party Intergration
+    * Intergrate google Authentication
+    * --
+    
+    Email COnfirmation
+    
+
 {
   "email": "ofentse@gmail.com",
   "password": "Ofente@97"
@@ -113,4 +121,9 @@ export class AdminComponent implements OnInit {
   }
 }
 
-  
+Hi Lesiba.
+
+Please use this code 087561 as your confirmtion.
+
+Regards
+App Auth Team
