@@ -23,14 +23,14 @@ namespace AuthApp.Controllers
         private readonly AuthBDContext context;
         private readonly UserManager<User> userManager;
         private readonly IAuthManager authManager;
-        private EmailConfirmService emailConfirmService;
+        private IEmailConfirmService emailConfirmService;
 
         public AccountController(
             UserManager<User> userManager, 
             ILogger<AccountController> logger,
             AuthBDContext context,
-            IAuthManager authManager
-            
+            IAuthManager authManager,
+            IEmailConfirmService emailConfirmService
             //IMapper mapper
             )
         {
@@ -39,7 +39,7 @@ namespace AuthApp.Controllers
             //this.mapper = mapper;
             this.context = context;
             this.authManager = authManager;
-            
+            this.emailConfirmService = emailConfirmService;
         }
 
 
@@ -70,13 +70,14 @@ namespace AuthApp.Controllers
 
             try
             {
-
+                var code = new Random().Next(111111, 999999);
                 // Confirm Email
-                emailConfirmService = new EmailConfirmService();
-                EmailDto emailDto = new EmailDto(user.Firstname, new Random().Next(111111,999999));
+                //emailConfirmService = new EmailConfirmService();
+                //EmailDto emailDto = new EmailDto(user.Firstname, code);
 
-                emailConfirmService.SendEmail(emailDto, user.Email);
+                //emailConfirmService.SendEmail(emailDto, user.Email);
 
+                emailConfirmService.GoogleSMTP(userDto, code);
 
                 //var user = mapper.Map<User>(userDto);
                 var results = await userManager.CreateAsync(user, userDto.Password);
@@ -114,7 +115,6 @@ namespace AuthApp.Controllers
                 return StatusCode(500, $"Internl server Error");
             }
         }
-
 
         [HttpPost]
         [Route("login")]

@@ -15,14 +15,7 @@ namespace AuthApp.Dto
             this.code = code;
         }
         
-        public string Body
-        {
-            get
-            {
-                return $"Hi {firstname}.\nPlease use this {code} pin as your confirmtion.\n\nRegards \nAuth App Team";
-            }
-            set { }
-        }
+        public string Body { get; set;}
 
         public string Subject { get; set; } = "AuthApp Confirmation";
     }

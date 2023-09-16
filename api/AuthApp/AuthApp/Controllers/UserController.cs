@@ -104,6 +104,6 @@ namespace AuthApp.Controllers
         {
             return (context.Users?.Any(user => user.Email == email)).GetValueOrDefault();
         }
-
+        
     }
 }

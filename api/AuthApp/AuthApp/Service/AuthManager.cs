@@ -17,16 +17,19 @@ namespace AuthApp.Service
         private readonly UserManager<User> userManager;
         private readonly IConfiguration configuration;
         private User user;
-        
+        private IConfigurationSection jwtOptions;
+
         public AuthManager(UserManager<User> userManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.configuration = configuration;
+
+            jwtOptions = this.configuration.GetSection("JwtOptions");
         }
 
         public async Task<string> GenerateJwtToken()
         {
-            var jwtOptions = configuration.GetSection("JwtOptions");
+            //var jwtOptions = configuration.GetSection("JwtOptions");
             var key = Encoding.ASCII.GetBytes(jwtOptions.GetSection("Key").Value);
 
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
@@ -65,12 +68,8 @@ namespace AuthApp.Service
 
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
-            //var jwtSettings = _config.GetSection("JwtOptions");
-
-            //var expiration = DateTime.Now.AddMinutes(Convert.ToInt32(jwtSettings.GetSection("LifeTime").Value));
-
             var token = new JwtSecurityToken(
-                issuer: "AuthApp",
+                issuer: jwtOptions.GetSection("Issuer").Value,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: signingCredentials

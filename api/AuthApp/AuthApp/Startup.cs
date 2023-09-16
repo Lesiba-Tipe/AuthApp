@@ -16,6 +16,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace AuthApp
 {
@@ -24,6 +25,8 @@ namespace AuthApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            //configuration.AddJsonFile("appsettings.json", true, true).Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -31,8 +34,7 @@ namespace AuthApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var secret_key = Encoding.ASCII.GetBytes("fqhhLNdRJRKE4FbbiFMYHNybkI4qHZLb");
-
+            
             //services.AddLogging(options =>
             //{
             //    options.AddConfiguration(Configuration.GetSection("Logging")).AddConsole();
@@ -73,7 +75,9 @@ namespace AuthApp
 
 
             services.AddScoped<IAuthManager, AuthManager>();
+            services.AddScoped<IEmailConfirmService, EmailConfirmService>();
 
+            //services.Configure<IEmailConfirmService>(Configuration.GetSection(""));
             // Add Swagger
             services.AddSwaggerGen(option =>
             {
