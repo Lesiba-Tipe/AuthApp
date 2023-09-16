@@ -149,5 +149,7 @@ namespace AuthApp.Controllers
                 return StatusCode(500, $"Internl server Error {ex.Message}");
             }
         }
+
+        
     }
 }

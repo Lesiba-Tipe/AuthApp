@@ -1,6 +1,7 @@
 ﻿using AuthApp.Dto;
 using AuthApp.Entity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,19 @@ namespace AuthApp.Service
     public class AuthManager : IAuthManager
     {
         private readonly UserManager<User> userManager;
+        private readonly IConfiguration configuration;
         private User user;
-
-        public AuthManager(UserManager<User> userManager)
+        
+        public AuthManager(UserManager<User> userManager, IConfiguration configuration)
         {
             this.userManager = userManager;
+            this.configuration = configuration;
         }
 
         public async Task<string> GenerateJwtToken()
         {
-            var key = Encoding.ASCII.GetBytes("fqhhLNdRJRKE4FbbiFMYHNybkI4qHZLb");
+            var jwtOptions = configuration.GetSection("JwtOptions");
+            var key = Encoding.ASCII.GetBytes(jwtOptions.GetSection("Key").Value);
 
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
             var claims = await GetClaims();

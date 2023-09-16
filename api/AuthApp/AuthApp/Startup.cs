@@ -56,15 +56,17 @@ namespace AuthApp
             )
             .AddJwtBearer(options =>
                 {
+                    var jwtOptions = Configuration.GetSection("JwtOptions");
+                   
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "AuthApp",                                    //Use AppSettings
-                        //ValidAudience = "https://localhost:44331/api/",             //Use AppSettings
-                        IssuerSigningKey = new SymmetricSecurityKey(secret_key)     //Use AppSettings
+                        ValidIssuer = jwtOptions.GetSection("Issuer").Value,                                    //Use AppSettings
+                        ValidAudience = jwtOptions.GetSection("Audiance").Value,    // "https://localhost:44331/api/",             //Use AppSettings
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.GetSection("Key").Value))     //Use AppSettings
                     };
                 }
             );
