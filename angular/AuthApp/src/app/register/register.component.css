@@ -22,6 +22,9 @@
     /* box-shadow: 0px 2px 4px rgb(211, 210, 210); */
 }
 .signin-signup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 30px;
     text-align: center;
 }

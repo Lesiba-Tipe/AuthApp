@@ -8,20 +8,26 @@
         <h2 class="title margin-top" >Aero Space Portal</h2>
         <h4 class="margin-top" >Register</h4>
 
-        <form [formGroup]="formGroupRegister" (ngSubmit)="register()" class="sign-in-form margin-top">
+        <form [formGroup]="formGroupRegister" (ngSubmit)="register()" class="sign-in-form margin-top" >
           <!-- <form [formGroup]="formGroupRegister"  #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="sign-in-form margin-top"> -->
 
           <div class="row">
             <div class="col-6">
-              <div class="input-field">
+              <div class="input-field">               
+                <input formControlName="firstname"  type="text"  id="FirstName" placeholder="Firstname" class="form-control" aria-label="Firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" />
+                <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+                  <div *ngIf="f.firstname.errors?.required">Required</div>
+                </div>
                 
-                <input formControlName="firstname"  type="text"  id="FirstName" placeholder="Firstname" class="form-control" aria-label="Firstname" />
               </div>
             </div>
             <div class="col-6">
               <div class="input-field">
                 
-                <input formControlName="lastname" type="text" id="Lastname" placeholder="Lastname" class="form-control" />
+                <input formControlName="lastname" type="text" id="Lastname" placeholder="Lastname" class="form-control" aria-label="Lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" />
+                <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                  <div *ngIf="f.lastname.errors?.required">Required</div>
+                </div>
               </div>	
             </div>	
           </div>	
@@ -30,41 +36,70 @@
             <div class="col-6">
               <div class="input-field">
                 
-                <input formControlName="email" type="email"  id="Email" placeholder="Email" class="form-control" />
+                <input formControlName="email" [(ngModel)]="email" type="email"  id="Email" placeholder="Email" class="form-control" aria-label="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors?.required">Required</div>
+                </div>
               </div>
             </div>
             <div class="col-6">
               <div class="input-field">
                 
-                <input formControlName="phoneNumber" type="number" ngModel  id="phoneNumber" placeholder="Phone number" class="form-control" />
+                <input formControlName="phoneNumber" type="phoneNumber" ngModel  id="phoneNumber" placeholder="Phone number" class="form-control" aria-label="PhoneNumber" />
+                
               </div>	
             </div>	
           </div>	
 
           <div class="row margin-top">
             <div class="col-6">
-              <div class="input-field">
-                
-                <input formControlName="password" type="password"  id="Password" placeholder="Password" class="form-control" />
+              <div class="input-field">               
+                <input formControlName="password" type="password"  id="Password" placeholder="Password" class="form-control" placeholder="Password" class="form-control" aria-label="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors?.required">Required</div>
+                </div>
+                <div *ngIf="" ></div>
               </div>
             </div>
+
             <div class="col-6">
-              <div class="input-field">
-                
-                <input formControlName="confirmPassword" type="password"  id="ConfirmPassword" placeholder="Confirm password" class="form-control" />
+              <div class="input-field">              
+                <input formControlName="confirmPassword" type="password"  id="ConfirmPassword" placeholder="Confirm password" class="form-control" aria-label="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                  <div *ngIf="f.confirmPassword.errors?.passwordMatchValidator">Password does not match</div>
+                  <div *ngIf="f.confirmPassword.errors?.required">Required</div>
+                </div>
               </div>	
             </div>	
+
           </div>	
 
-          <div *ngIf="registeredSuccessfully" name="_alert" class="alert alert-success" id="login-error-alert">Registered Successfully!</div>
+          <div class="row margin-top">
+            <div class="col-6">
+              <div class="input-field">                
+                <input formControlName="confirmEmail"   type="number" maxlength="6"  id="confirmEmail" placeholder="OTP" class="form-control" />
+              </div>              
+            </div> 
 
-          <div *ngIf="formGroupRegister.hasError('passwordMismatch')">
-            Passwords do not match.
-          </div>
+            <div class="col-6">
+              <div class="input-field">                
+                <input  type="button" (click)="requestOTP(email)" value="Request OTP" class="btn btn-primary">
+              </div>              
+            </div> 
+                     	
+          </div>	
 
-          <input type="submit" [disabled]="formGroupRegister.invalid" value="Register" class="btn btn-primary margin-top login-btn">
+
+          <input type="submit"  value="Register" class="btn btn-primary margin-top login-btn">
           
         </form>
+
+        
+        <div class="margin-top">
+          <div class="social-media d-flex flex-row justify-content-center" >
+            <div id="btn_googleSignUp"></div>           
+          </div>
+        </div>
 
         <div class="margin-top">
           <a routerLink="/login" style="font-size: 15px;color: #222b45;" >Do you have an account? Login here</a>

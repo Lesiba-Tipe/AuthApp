@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
+
   constructor() {}
 
   public setRoles(roles: []) {
@@ -36,4 +37,7 @@ export class AuthService {
   public isLoggedIn() {
     return this.getRoles() && this.getToken();
   }
+
+  
+  
 }

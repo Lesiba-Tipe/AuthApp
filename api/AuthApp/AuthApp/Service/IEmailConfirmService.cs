@@ -8,7 +8,6 @@ namespace AuthApp.Service
 {
     public interface IEmailConfirmService
     {
-        void SendEmail(EmailDto emailDto, string userEmail);
-        void GoogleSMTP( UserDto userDto, int code);
+        void GoogleSMTP( EmailDto  emailDto, int code);
     }
 }

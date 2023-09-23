@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthApp.Dto
+namespace AuthApp.Dto 
 {
-    public class EmailDto
-    {        
-        public int Code { get; set;}
+    public class GoogleDto
+    {
         public string Email { get; set; }
-        public string Firstname { get; set; }
     }
 }

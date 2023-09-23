@@ -1,11 +1,11 @@
-<div class="login-container">
+<div class="login-container"> <!-- Main Frame -->
     <div class="forms-container">
       <div class="signin-signup">
         
-        <img style="height: auto; width: 70%; " src="/assets/img/logo-Asset272x.png" class=" rounded mx-auto d-block" alt="logo">
+        <img style="height: auto; width: 80%; " src="/assets/img/logo-Asset272x.png" class=" rounded mx-auto d-block" alt="logo">
 
         <h2 class="title margin-top" style="color:#222b45; " >Aero Space Portal</h2>
-        <h5 class="margin-top" style="color:#222b45;" >Login</h5>
+        <h4 class="margin-top" style="color:#222b45;" >Login</h4>
 
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="sign-in-form" >
           <div class="input-field margin-top">
@@ -24,6 +24,10 @@
        
         </form>
 
+        <div class="margin-top">
+          <div id="btn_googleSignIn"></div>
+        </div>
+
         <div class="row margin-top">
           <a routerLink="/register" style="font-size: 15px;color: #222b45;">Are you new? Register here</a>
         </div>
@@ -32,6 +36,9 @@
           <a routerLink="/" style="font-size: 15px;color: #222b45;">Forgot Password? Reset here</a>
         </div>
 
+        
+
       </div>
     </div>
+
 </div>

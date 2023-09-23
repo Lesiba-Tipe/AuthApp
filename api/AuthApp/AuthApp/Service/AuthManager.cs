@@ -41,12 +41,20 @@ namespace AuthApp.Service
             return results;
         }
 
-        public async Task<bool> ValidateUser(LogInDto _user)
+        public async Task<bool> ValidateUserWithPassword(LogInDto _user)
         {
             //Find username
             user = await userManager.FindByEmailAsync(_user.Email);
 
             return (user != null && await userManager.CheckPasswordAsync(user, _user.Password));
+        }
+
+        public async Task<bool> ValidateUserWithEmail(string email)
+        {
+            //Find username
+            user = await userManager.FindByEmailAsync(email);
+
+            return (user != null);
         }
 
         private async Task<List<Claim>> GetClaims()

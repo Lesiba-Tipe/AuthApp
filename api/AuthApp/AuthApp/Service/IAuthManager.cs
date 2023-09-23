@@ -9,7 +9,8 @@ namespace AuthApp.Service
 {
     public interface IAuthManager
     {
-        Task<bool> ValidateUser(LogInDto user);
+        Task<bool> ValidateUserWithPassword(LogInDto user);
+        Task<bool> ValidateUserWithEmail(string email);
 
         Task<string> GenerateJwtToken();
     }

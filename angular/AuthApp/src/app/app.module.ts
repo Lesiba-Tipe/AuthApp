@@ -23,6 +23,8 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { ListUserComponent } from './list-user/list-user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { HomeComponent } from './home/home.component';
+
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     ListUserComponent,
     ProfileComponent,
     UserDetailsComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatTableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     AuthGuard,
@@ -56,7 +59,9 @@ import { UserDetailsComponent } from './user-details/user-details.component';
       multi:true
     },
     AuthService,
-    UserService
+    UserService,
+
+    
   ],
   bootstrap: [AppComponent]
 })

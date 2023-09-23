@@ -6,6 +6,10 @@ import { NgForm } from '@angular/forms';
 import { AuthGuard } from '../auth/auth.gard';
 import { ProfileService } from '../service/profile.service';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environment/environment';
+import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
+
+
 
 @Component({
   selector: 'app-login',
@@ -16,40 +20,57 @@ export class LoginComponent {
 
   invalidLogin: boolean = false;
   registeredSuccessfully: boolean = false;
-  public response!: { dbPath: ''; };
 
+  private clientId = environment.clientId
+  
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
-    private authGard: AuthGuard,
-    private profileService: ProfileService
-  ) {}
+    //private authGard: AuthGuard,
+    //private profileService: ProfileService,
+  ) {
+
+  }
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.handleGoogleSignIn();
+  }
+
+  handleCredentialResponse(credentialResponse: CredentialResponse) {
+
+    this.userService.signInWithGoogle(credentialResponse).subscribe(
+      (response: any) => {
+        console.log('On Success' + response)
+        this.onSuccess(response)               
+      },
+      (error) => {   
+        const status = error.status
+        switch (status) {
+          case 0:
+            alert('Server is not available, Please try again later');
+            break;
+          case 401:
+            alert('Unauthorize');
+            break;
+          default:
+            alert('Error: ' + status + '| ' + error)
+            break;
+        }      
+          console.log('STATUS: ', status)
+          console.log('ERROR: ', error)       
+      }
+    );
+      
+  }
 
   login(loginForms: NgForm) {
     console.log('log-in button pressed.... ')
     
     this.userService.login(loginForms.value).subscribe(
       (response: any) => {
-        this.invalidLogin = false;
-
-        this.authService.setToken(response.jwtToken);
-        console.log(response.jwtToken)
-
-        this.authService.setRoles(response.roles);
-        this.authService.setId(response.id);
-
-        const role = response.roles[0];
-
-        if(role === 'Admin') {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/user']);
-        }
-        
+        this.onSuccess(response)        
       },
       (error) => {   
       
@@ -79,5 +100,43 @@ export class LoginComponent {
     );
   }
 
+  handleGoogleSignIn() {
+    // @ts-ignore
+    window.onGoogleLibraryLoad = () => {
+      // @ts-ignore
+      google.accounts.id.initialize({
+        client_id: this.clientId,
+        callback: this.handleCredentialResponse.bind(this),
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+      // @ts-ignore
+      google.accounts.id.renderButton(
+      // @ts-ignore
+      document.getElementById("btn_googleSignIn"),
+        { theme: "outline", size: "large", width: "100%" } 
+      );
+      // @ts-ignore
+      google.accounts.id.prompt((notification: PromptMomentNotification) => {});
+    };
+  }
+ 
+  onSuccess(response: any){
+        this.invalidLogin = false;
+
+        this.authService.setToken(response.jwtToken);
+        console.log(response.jwtToken)
+
+        this.authService.setRoles(response.roles);
+        this.authService.setId(response.id);
+
+        const role = response.roles[0];
+
+        if(role === 'Admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/user']);
+        }
+  }
 
 }

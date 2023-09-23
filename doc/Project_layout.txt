@@ -72,8 +72,11 @@ Service
   The auth guard is an angular route guard that's used to prevent unauthenticated or unauthorized users from accessing restricted routes, it does this by implementing the CanActivate interface which allows the guard to decide if a route can be activated with the canActivate() method. If the method returns true the route is activated (allowed to proceed), otherwise if the method returns false the route is blocked.
   https://jasonwatmore.com/post/2022/12/22/angular-14-role-based-authorization-tutorial-with-example
   https://www.bezkoder.com/angular-16-jwt-auth/#Create_Role-based_Components
-  
-  import { Component, OnInit } from '@angular/core';
+ 
+ https://www.c-sharpcorner.com/article/policy-based-role-based-authorization-in-asp-net-core/
+ https://coderethinked.com/policy-based-authorization-in-asp-net-core/
+ -----------------------------------------------------------------------------------------------
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthGuard } from '../auth/auth.gard';
 import { AuthService } from '../service/auth-service.service';

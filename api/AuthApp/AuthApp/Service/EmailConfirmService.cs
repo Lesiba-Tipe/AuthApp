@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace AuthApp.Service
 {
@@ -17,47 +18,12 @@ namespace AuthApp.Service
 
             googleSMTP = this.config.GetSection("GoogleSMTP");
         }
-
-        public void SendEmail(EmailDto emailDto, string userEmail)
-        {
-            var email = "lesibamoshweu@gmail.com";
-            var password = "mvlpuoefuoklondo";
-
-            try
-            {
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
-                message.From = new MailAddress(email);
-                message.To.Add(new MailAddress(userEmail));
-                message.Subject = emailDto.Subject;
-                message.IsBodyHtml = false; //to make message body as html
-                message.Priority = MailPriority.Normal;
-                message.Body = emailDto.Body;
-                smtp.Port = 587;
-                smtp.Host = "smtp.gmail.com"; //for gmail host
-                smtp.EnableSsl = true;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential(email, password);
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Send(message);
-            }
-            catch (Exception ex) 
-            {
-                //logger.LogDebug(ex.Message);
-                var msg = ex.Message;
-            }
-        }
+       
         
-        public void GoogleSMTP(UserDto userDto, int code)
+        public void GoogleSMTP(EmailDto emailDto, int code)
         {
             try
             {
-                var c = googleSMTP.GetSection("Client").Value;
-                var p = googleSMTP.GetSection("Port").Value;
-                var e = googleSMTP.GetSection("Email").Value;
-                var pa = googleSMTP.GetSection("Password").Value;
-
-                var test = config["GoogleSMTP:Client"];
 
                 var smtpClient = new SmtpClient(googleSMTP.GetSection("Client").Value)
                 {
@@ -68,11 +34,12 @@ namespace AuthApp.Service
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(userDto.Email),
+                    From = new MailAddress(emailDto.Email),
                     Subject = "AuthApp Confirmation",
-                    Body = EmailBody(userDto.Firstname, code),
+                    Body = EmailBody(emailDto.Firstname, code),
                     IsBodyHtml = false,
-                    To = { userDto.Email }
+                    Priority = MailPriority.Normal,
+                    To = { emailDto.Email }
                 };
 
                 smtpClient.Send(mailMessage);
@@ -86,7 +53,7 @@ namespace AuthApp.Service
 
         private string EmailBody(string firstname, int code)
         {
-            return $"Hi {firstname}.\nPlease use this code {code} as your confirmtion.\n\nRegards \nAuth App Team (EmailBody)";
+            return $"Hi {firstname}.\nPlease use this code {code} as your confirmtion.\n\nRegards \nAuth App Team";
         }
     }
 }

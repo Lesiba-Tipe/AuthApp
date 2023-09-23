@@ -27,6 +27,7 @@ namespace AuthApp.Controllers
             this.userManager = userManager;
         }
 
+        [AllowAnonymous]
         [HttpGet("users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -104,6 +105,8 @@ namespace AuthApp.Controllers
         {
             return (context.Users?.Any(user => user.Email == email)).GetValueOrDefault();
         }
+
+       
         
     }
 }
