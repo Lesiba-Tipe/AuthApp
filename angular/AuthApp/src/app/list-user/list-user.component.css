@@ -1,22 +1,5 @@
 /* Primary-color: #222b45; */
 
-.frame{
-
-    /* margin-top: 5rem; */
-    /* margin-left: 10.3rem; */
-  }
-  
-  .admin-nav{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    margin-top: .7rem;
-    background-color: blueviolet;
-  }
   
   .mat-header -cell{
       background-color: #2E395E;
@@ -58,10 +41,6 @@
   
   .sign-in-form{
     width: 100%;
-  }
-  
-  .margin-top{
-    margin-top: 20px;   
   }
   
   /* clickable-table.component.css */

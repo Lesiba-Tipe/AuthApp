@@ -15,25 +15,24 @@ namespace AuthApp.Service
     public class AuthManager : IAuthManager
     {
         private readonly UserManager<User> userManager;
-        private readonly IConfiguration configuration;
-        private User user;
+        //private readonly UserService userService;
+        //private User user;
         private IConfigurationSection jwtOptions;
 
         public AuthManager(UserManager<User> userManager, IConfiguration configuration)
         {
             this.userManager = userManager;
-            this.configuration = configuration;
-
-            jwtOptions = this.configuration.GetSection("JwtOptions");
+            //this.userService = userService;
+            jwtOptions = configuration.GetSection("JwtOptions");
         }
 
-        public async Task<string> GenerateJwtToken()
+        public async Task<string> GenerateJwtToken(User user)
         {
             //var jwtOptions = configuration.GetSection("JwtOptions");
             var key = Encoding.ASCII.GetBytes(jwtOptions.GetSection("Key").Value);
 
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
-            var claims = await GetClaims();
+            var claims = await GetClaims(user);
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
 
             var results = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
@@ -44,20 +43,12 @@ namespace AuthApp.Service
         public async Task<bool> ValidateUserWithPassword(LogInDto _user)
         {
             //Find username
-            user = await userManager.FindByEmailAsync(_user.Email);
+            var user = await userManager.FindByEmailAsync(_user.Email);
 
             return (user != null && await userManager.CheckPasswordAsync(user, _user.Password));
         }
-
-        public async Task<bool> ValidateUserWithEmail(string email)
-        {
-            //Find username
-            user = await userManager.FindByEmailAsync(email);
-
-            return (user != null);
-        }
-
-        private async Task<List<Claim>> GetClaims()
+       
+        private async Task<List<Claim>> GetClaims(User user)
         {
             var claims = new List<Claim>()
             {
@@ -86,6 +77,23 @@ namespace AuthApp.Service
             return token;
         }
 
+        public async Task<string> RequestPasswordToken(RequestPasswordDto requestPasswordDto)
+        {
+            var user = await userManager.FindByEmailAsync(requestPasswordDto.Email);
 
+            var passwordToken = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            return passwordToken;
+        }
+
+        public async Task<IdentityResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
+
+            var results = await userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+
+            return results;
+        }
+      
     }
 }

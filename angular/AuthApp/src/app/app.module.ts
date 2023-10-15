@@ -13,6 +13,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 import { UserService } from './service/user-service.service';
 import { AuthService } from './service/auth-service.service';
+import { ICrudeService } from './service/icrude.service';
 
 import { AuthGuard } from './auth/auth.gard';
 import { AuthInterceptor } from './auth/auth.interceptor';
@@ -24,6 +25,10 @@ import { ListUserComponent } from './list-user/list-user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { HomeComponent } from './home/home.component';
+import { BuildingComponent } from './building/building/building.component';
+import { VisitorListComponent } from './visitor-list/visitor-list.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RequestPasswordTokenComponent } from './request-password-token/request-password-token.component';
 
 
 
@@ -40,6 +45,10 @@ import { HomeComponent } from './home/home.component';
     ProfileComponent,
     UserDetailsComponent,
     HomeComponent,
+    BuildingComponent,
+    VisitorListComponent,
+    ResetPasswordComponent,
+    RequestPasswordTokenComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,8 +69,7 @@ import { HomeComponent } from './home/home.component';
     },
     AuthService,
     UserService,
-
-    
+    ICrudeService 
   ],
   bootstrap: [AppComponent]
 })

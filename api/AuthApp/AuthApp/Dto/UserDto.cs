@@ -10,7 +10,7 @@ namespace AuthApp.Dto
 
     public class UserDto : LogInDto
     {
-        //public string Id { get; }
+        public string Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Username { get; set; }

@@ -10,21 +10,24 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using AuthApp.Service;
+
 
 namespace AuthApp.Controllers
 {
     [Authorize]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
-        private readonly UserManager<User> userManager;
-        private readonly AuthBDContext context;
-
-        public UserController(UserManager<User> userManager, AuthBDContext context)
+        //private readonly UserManager<User> userManager;
+        private UserService userService;
+        public UserController(UserManager<User> userManager, AuthDBContext context, IMapper mapper) : base(context,mapper)
         {
-            this.context = context;
-            this.userManager = userManager;
+            //this.userManager = userManager;
+
+            userService = new UserService(userManager, context, mapper);
         }
 
         [AllowAnonymous]
@@ -34,7 +37,12 @@ namespace AuthApp.Controllers
             if (context == null)
                 return NotFound();
 
-            return await GetAllUser();
+            var users = await userService.GetAll();
+
+            if (User == null)
+                return NotFound();
+
+            return Accepted(users);
         }
 
         [HttpGet("{id}")]
@@ -43,70 +51,71 @@ namespace AuthApp.Controllers
             if (context == null)
                 return NotFound();
 
-            var user = await context.Users.FindAsync(id);
+            var user = await userService.FindById(id);
 
             if (user == null)
                 return NotFound();
 
+            var roles = await userService.GetRolesAsync(user);
+
             //Map Data
-            var userDto = new UserDto()
-            {
-                Firstname = user.Firstname,
-                Lastname = user.Lastname,
-                Roles = null,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber
-            };
+            var userDto = mapper.Map<UserDto>(user);
+            userDto.Roles = roles;
 
             return userDto;
         }
 
-        [HttpPut("{id}")]
+        [AllowAnonymous]
+        [HttpPut("update/{id}")]
         //[Route("update")]
-        public async Task<ActionResult<UserDto>> UpdateUser(string id, UserDto userDto)
+        public async Task<ActionResult<UserDto>> UpdateUser(string id, [FromBody]UserDto userDto)
         {
-            var user = new User();
 
-            //Map Data
-            var _user = new User()
+            if (id != userDto.Id)
+                return BadRequest("Content did not match subject");
+
+            try 
             {
-                Firstname = user.Firstname,
-                Lastname = user.Lastname,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber
-            };
+                await userService.Update(userDto);
 
-            if (id != user.Id)
-                return BadRequest();
+                var results = await context.SaveChangesAsync();
 
-            context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!EntryExist(id))
-                    return NotFound();
+                    return NotFound(ex);
                 else
                     throw;
             }
 
             return NoContent();
         }
-
-        private async Task<List<User>> GetAllUser()
-        {
-            return await context.Users.ToListAsync();
-        }
-
+        
         private bool EntryExist(string email)
         {
             return (context.Users?.Any(user => user.Email == email)).GetValueOrDefault();
         }
-
        
-        
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("add-roles")]
+        public async Task<IActionResult> AddRoles([FromBody] RolesDto rolesDto)
+        {
+            //Add Roles
+            var results = await userService.AddRoles(rolesDto);
+
+            if (!results.Succeeded)
+            {
+                foreach (var error in results.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+                return BadRequest(ModelState);
+            }
+
+            return Accepted(results);
+        }
+
     }
 }

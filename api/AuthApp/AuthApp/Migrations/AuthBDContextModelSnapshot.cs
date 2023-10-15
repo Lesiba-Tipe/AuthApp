@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthApp.Migrations
 {
-    [DbContext(typeof(AuthBDContext))]
+    [DbContext(typeof(AuthDBContext))]
     partial class AuthBDContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -18,6 +18,25 @@ namespace AuthApp.Migrations
                 .HasAnnotation("ProductVersion", "3.1.32")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AuthApp.Entity.Building", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Floors")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Buildings");
+                });
 
             modelBuilder.Entity("AuthApp.Entity.User", b =>
                 {
@@ -119,17 +138,59 @@ namespace AuthApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "efb0d386-80b6-4849-8d6f-3e4c7aab3c5f",
-                            ConcurrencyStamp = "7813275f-ebe2-4828-88fd-39c001b096b4",
+                            Id = "d58af74d-e154-49ae-b353-2393e9a66ccf",
+                            ConcurrencyStamp = "ad2840c4-00b7-41ee-b413-e794556faa29",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d42f6608-3019-4ba1-963f-891eac149505",
-                            ConcurrencyStamp = "b7b27653-06c6-4c3c-a5de-c1094bc8da1d",
+                            Id = "87e2c776-7450-46e1-8641-0ebbe3037ef9",
+                            ConcurrencyStamp = "25ea38ae-b8a1-4c2b-b75f-dfb5a528cfec",
                             Name = "User",
                             NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "f2451e87-85d3-4840-8528-cc5cf83280ab",
+                            ConcurrencyStamp = "c590b815-0baa-4f1d-af30-d08c161b4d0b",
+                            Name = "Property-Administrator",
+                            NormalizedName = "PROPERTY-ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "8a5a9d32-1119-4270-abda-a29fde10633a",
+                            ConcurrencyStamp = "db974b6b-dd5d-4347-8f19-35ea65635bcd",
+                            Name = "Caretaker",
+                            NormalizedName = "CARETAKER"
+                        },
+                        new
+                        {
+                            Id = "ea993f55-e566-4ceb-9f42-00ae08241bd7",
+                            ConcurrencyStamp = "8394ca14-a967-429b-bd8f-857c71a1e8de",
+                            Name = "Landlord",
+                            NormalizedName = "LANDLORD"
+                        },
+                        new
+                        {
+                            Id = "9a03f787-9800-466e-9e65-ddce64a30bec",
+                            ConcurrencyStamp = "ad52b454-a021-4374-b022-6c1b6965c88b",
+                            Name = "Access-control",
+                            NormalizedName = "ACCESS-CONTROL"
+                        },
+                        new
+                        {
+                            Id = "04d2a2fe-8cff-4500-ad99-ab137af6ef71",
+                            ConcurrencyStamp = "0704b6dd-45e0-43ba-8664-7f43ccca061a",
+                            Name = "Tenant",
+                            NormalizedName = "TENANT"
+                        },
+                        new
+                        {
+                            Id = "069a608b-22f8-4bd3-a891-571317608737",
+                            ConcurrencyStamp = "025ca65e-42ce-4790-bce8-635970dc70eb",
+                            Name = "Visitor",
+                            NormalizedName = "VISITOR"
                         });
                 });
 

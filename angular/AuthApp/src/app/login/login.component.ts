@@ -8,6 +8,7 @@ import { ProfileService } from '../service/profile.service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
+import { RolesConfigService } from '../service/roles-config.service';
 
 
 
@@ -27,12 +28,12 @@ export class LoginComponent {
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
+    private rolesConfigService: RolesConfigService
     //private authGard: AuthGuard,
     //private profileService: ProfileService,
   ) {
 
   }
-
 
   ngOnInit(): void {
     this.handleGoogleSignIn();
@@ -131,12 +132,32 @@ export class LoginComponent {
         this.authService.setId(response.id);
 
         const role = response.roles[0];
-
-        if(role === 'Admin') {
-          this.router.navigate(['/admin']);
-        } else {
-          this.router.navigate(['/user']);
-        }
+        console.log('ROLE:', role)
+        switch (role) {
+          case 'Admin': 
+            this.router.navigate(['/admin']);
+            break;
+          case 'Property-Administrator':
+            this.router.navigate(['/user']);     
+            break;
+          case 'Caretaker':
+            this.router.navigate(['/user']);        
+            break;
+          case 'Landlord':
+            this.router.navigate(['/user']);
+            break;
+          case 'Access-control':
+            this.router.navigate(['/user']);             
+            break;
+          case 'Tenant':
+            this.router.navigate(['/user']);           
+            break;
+          case 'Visitor':            
+            break;
+          default:
+           this.router.navigate(['/user']);
+           break;
+        }     
   }
 
 }

@@ -1,8 +1,6 @@
 ﻿using AuthApp.Dto;
 using AuthApp.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
 namespace AuthApp.Service
@@ -10,8 +8,10 @@ namespace AuthApp.Service
     public interface IAuthManager
     {
         Task<bool> ValidateUserWithPassword(LogInDto user);
-        Task<bool> ValidateUserWithEmail(string email);
+        //Task<bool> ValidateUserWithEmail(string email);
+        Task<string> GenerateJwtToken(User user);
 
-        Task<string> GenerateJwtToken();
+        Task<string> RequestPasswordToken(RequestPasswordDto requestPasswordDto);
+        Task<IdentityResult> ResetPassword(ResetPasswordDto resetPasswordDto);
     }
 }

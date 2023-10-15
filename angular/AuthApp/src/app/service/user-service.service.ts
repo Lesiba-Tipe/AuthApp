@@ -12,9 +12,6 @@ import { IEmailDto } from 'src/data/EmailDto';
 })
 export class UserService {
 
-
-  
-
   PATH_OF_API = environment.apiUrl + 'api/';
 
   requestHeader = new HttpHeaders({ 'No-Auth': 'True' });
@@ -43,6 +40,19 @@ export class UserService {
       headers: this.requestHeader,
     });
   }
+
+  requestPasswordToken(entry: any){
+    return this.httpclient.post(this.PATH_OF_API + 'Account/request-password-token', entry, {
+      headers: this.requestHeader,
+    });
+  }
+
+  resetPassword(entry: any){
+    return this.httpclient.post(this.PATH_OF_API + 'Account/reset-password', entry, {
+      headers: this.requestHeader,
+    });
+  }
+
   //SOCIAL
   private decodeJwtToken(googleJwtToken : any) : any{
     const decoder = new JwtHelperService();

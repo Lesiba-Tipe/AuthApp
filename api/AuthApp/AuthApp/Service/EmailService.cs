@@ -8,19 +8,17 @@ using System.Threading.Tasks;
 
 namespace AuthApp.Service
 {
-    public class EmailConfirmService : IEmailConfirmService
+    public class EmailService : IEmailService
     {
-        private protected IConfiguration config;
-        private IConfigurationSection googleSMTP;
-        public EmailConfirmService(IConfiguration config)
+        //private protected IConfiguration config;
+        private IConfigurationSection googleSMTP, angularClient;
+        public EmailService(IConfiguration config)
         {
-            this.config = config;
-
-            googleSMTP = this.config.GetSection("GoogleSMTP");
+            googleSMTP = config.GetSection("GoogleSMTP");
+            angularClient = config.GetSection("AngularClient");
         }
        
-        
-        public void GoogleSMTP(EmailDto emailDto, int code)
+        public async Task GoogleSMTP(EmailDto emailDto)
         {
             try
             {
@@ -35,8 +33,8 @@ namespace AuthApp.Service
                 var mailMessage = new MailMessage
                 {
                     From = new MailAddress(emailDto.Email),
-                    Subject = "AuthApp Confirmation",
-                    Body = EmailBody(emailDto.Firstname, code),
+                    Subject = emailDto.Subject,
+                    Body = emailDto.Body,
                     IsBodyHtml = false,
                     Priority = MailPriority.Normal,
                     To = { emailDto.Email }
@@ -51,9 +49,16 @@ namespace AuthApp.Service
             }
         }
 
-        private string EmailBody(string firstname, int code)
+        public string EmailBodyConfirm(string firstname, int code)
         {
-            return $"Hi {firstname}.\nPlease use this code {code} as your confirmtion.\n\nRegards \nAuth App Team";
+            return $"Hi {firstname}.\nPlease use this code {code} as your confirmtion.\n\nRegards \nAero Space Team";
         }
+
+        public string EmailBodySendPasswordToken(string firstname, string urlToken)
+        {
+            return $"Hi {firstname}.\nPlease use this link { urlToken } to reset your password." +
+                $"\nThis link is valid for 2 hours.\n\nRegards \nAero Space Team";
+        }
+
     }
 }

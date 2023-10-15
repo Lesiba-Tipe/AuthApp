@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthApp.Migrations
 {
-    [DbContext(typeof(AuthBDContext))]
+    [DbContext(typeof(AuthDBContext))]
     [Migration("20230806113630_role-Configuration")]
     partial class roleConfiguration
     {

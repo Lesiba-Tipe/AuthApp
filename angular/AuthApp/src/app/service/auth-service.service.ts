@@ -11,7 +11,7 @@ export class AuthService {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
 
-  public getRoles(): [] {
+  public getRoles() {
     return JSON.parse(localStorage.getItem('roles')!);
   }
 

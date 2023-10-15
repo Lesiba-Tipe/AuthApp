@@ -5,6 +5,8 @@
     </div>
     <div class="profile">
         <ul>
+          <li><a href="" routerLink="/profile" class="bi bi-bell-fill"></a></li>
+          <li><a href="" routerLink="/profile" class="bi bi-envelope-fill"></a></li>
           <li><a href="" routerLink="/profile" class="bi bi-person-fill"> {{profile.firstname}} {{profile.lastname}}</a></li>
           <li><a href="" (click)="logout()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logout" class="bi bi-box-arrow-left"></a></li>
         </ul> 
@@ -12,14 +14,32 @@
 
  </div>
 
-
  <!-- The sidebar -->
 <div class="sidebar">
-  <a href="#home"><i class="bi bi-house-fill"></i> Home</a>
-  <a href="#services"><i class="bi bi-people-fill"></i> Services</a>
-  <a routerLink="/users" href=""><i class="bi bi-people-fill"></i> Users</a>
-  <a href="#contact"><i class="bi bi-person-lines-fill"></i> Contact</a>
+  <!-- <a href=""><i class="bi bi-house-fill"></i>Home</a> -->
+  <div *ngIf="property_admin || caretaker" >
+    <a  routerLink="/building" href="" ><i class="bi bi-buildings-fill"></i> Buildings</a>
+    <a routerLink="/apartments" href="" ><i class="bi bi-building-fill"></i> Apartments</a>
+    <!-- <a routerLink="/apartments" href="" ><i class="bi bi-people-fill"></i> Caretakers</a> -->
+    <a routerLink="/apartments" href="" ><i class="bi bi-person-vcard-fill"></i> Access control</a>
+    <a routerLink="/apartments" href="" ><i class="bi bi-person-fill-gear"></i> Landlords</a>
+    <a routerLink="/apartments" href="" ><i class="bi bi-person-fill-lock"></i> Tanants</a>
+    <a routerLink="/users" href="" ><i class="bi bi-people-fill"></i> Visitors</a>
+    <!-- <a routerLink="/users" href=""><i class="bi bi-people-fill"></i> Users</a> -->
+  </div>
+
+  <div *ngIf="landlord || tenant || user" >      
+    <a routerLink="/apartments" href="" ><i class="bi bi-person-fill-lock"></i> Tanants</a>
+    <a routerLink="/users" href="" ><i class="bi bi-people-fill"></i> Visitors</a>
+    <!-- <a routerLink="/users" href=""><i class="bi bi-people-fill"></i> Users</a> -->
+  </div>
+
+  
+  
+
+
 </div>
+
 
 
 </div>

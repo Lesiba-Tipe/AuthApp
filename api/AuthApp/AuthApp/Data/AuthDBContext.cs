@@ -5,16 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthApp.Data
 {
-    public class AuthBDContext : IdentityDbContext<User>
+    public class AuthDBContext : IdentityDbContext<User>
     {
-        public AuthBDContext(DbContextOptions<AuthBDContext> options) : base(options){  }
+        public AuthDBContext(DbContextOptions<AuthDBContext> options) : base(options){  }
         public DbSet<User> Users { get; set; }
+        public DbSet<Building> Buildings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new RoleConfig());           
         }
     }
 }

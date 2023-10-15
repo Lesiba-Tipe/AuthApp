@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration.Json;
+using AuthApp.Config;
+using System;
 
 namespace AuthApp
 {
@@ -43,12 +45,18 @@ namespace AuthApp
 
             services.AddControllers();
 
-            services.AddDbContext<AuthBDContext>(options =>
+            services.AddDbContext<AuthDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AuthBDContext>()
+                .AddEntityFrameworkStores<AuthDBContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+               {
+                   options.TokenLifespan = TimeSpan.FromHours(2);
+               }
+            );
 
             services.AddAuthentication(options =>
                 {
@@ -73,9 +81,18 @@ namespace AuthApp
                 }
             );
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("getUsers", policy => policy.RequireRole("Admin"));
+            });
 
             services.AddScoped<IAuthManager, AuthManager>();
-            services.AddScoped<IEmailConfirmService, EmailConfirmService>();
+            services.AddScoped<IEmailService, EmailService>();
+
+
+
+            //Inject AutoMap
+            services.AddAutoMapper(typeof(MapperConfig));
 
             //services.Configure<IEmailConfirmService>(Configuration.GetSection(""));
             // Add Swagger

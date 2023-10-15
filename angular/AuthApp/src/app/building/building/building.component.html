@@ -1,0 +1,105 @@
+<app-dashboard></app-dashboard>
+
+
+
+<!-- SHOW BUILDING CARD LIST -->
+
+<div style="background-color: bisque;" class="frame d-flex flex-col justify-content-center" >
+    <div class="admin-nav">
+        <div class="profile">
+            <ul>
+                <li>
+                    <a href="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add Building" class="bi bi-building-fill-add" data-bs-toggle="modal" data-bs-target="#addBuildingModal" ></a>
+                </li>
+            </ul> 
+        </div>
+    </div>
+     
+
+    <div class="frame d-flex flex-row justify-content-center" >
+        <div class="card-container gap-3 d-flex ">
+
+            <div href="" class="card">
+                <div class="card-title">
+                    B3-G-6
+                </div>
+                <div class="body">
+                    <p>Landlord <br> Ofentse B <br> 3-Bedroom </p>
+                </div>
+            </div>
+            
+            <div href="" class="card">
+                <div class="card-title">
+                    B3-G-7
+                </div>
+                <div class="body">
+                    <p>Landlord <br> Ofentse B <br> 2-Bedroom </p>
+                </div>
+            </div>
+            
+            <div href="" class="card">
+                <div class="card-title">
+                    B3-G-7
+                </div>
+                <div class="body">
+                    <p>Landlord <br> Ofentse B <br> 2-Bedroom </p>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
+<!-- Modal ADD USER-->
+<div class="modal fade " id="addBuildingModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+  
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Add new user</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          
+          <form  #addNewUserForm="ngForm" (ngSubmit)="addNewBuilding(addNewUserForm)" class="sign-in-form margin-top">
+
+            <div class="row">
+              <div class="col">
+                <div class="input-field">               
+                  <input  type="text" ngModel name="name" placeholder="Name" class="form-control" aria-label="BuildingName" />
+                </div>
+              </div>
+	
+            </div>	
+  
+            <div class="row margin-top">
+              <div class="col">
+                <div class="input-field">
+                  
+                  <input type="text" ngModel name="floors" placeholder="Number of floors" class="form-control" />
+                </div>
+              </div>
+	
+            </div>	
+  
+            <div class="row margin-top">
+              <div class="col">
+                <div class="input-field">
+                  
+                  <input type="text" ngModel name="code" placeholder="Property Code" class="form-control" />
+                </div>
+              </div>
+             
+            </div>	
+            
+            <div class="row margin-top modal-footer">
+              <input type="submit" class="btn btn-primary margin-top login-btn" value="Save" >
+            </div>
+  
+          </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>

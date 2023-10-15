@@ -1,0 +1,116 @@
+AUTHENTICATION > The process for identifying user <Username_Password>
+  client > controller > service > userDatabase
+
+Controllers
+  * AccountController
+  
+Service
+  * AccountService
+  
+ 
+ C# Library
+  * UserManager
+  
+ [Task_001]
+  implement login (plain)
+ 
+ Data
+  LogInDto
+  
+  {
+  "email": "dineo@gmail.com",
+  "password": "Dineo@24",
+  "firstname": "Dineo",
+  "lastname": "Rametse",
+  "username": "Dineo@24",
+  "phoneNumber": "25516753",
+  "roles": [
+    "Admin"
+  ]
+}
+
+{
+  "email": "ofentse@gmail.com",
+  "password": "Ofente@97"
+}
+
+{
+  "email": "dineo@gmail.com",
+  "password": "Dineo@24"
+}
+
+ public async Task<string> GenerateJwtToken(string id)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("fqhhLNdRJRKE4FbbiFMYHNybkI4qHZLb");
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                //Subject = new ClaimsIdentity(await GetClaims()),
+                Claims = await GetClaims(),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Issuer = "AuthApp",
+                Audience = "https://localhost:44331/api/",
+                
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return $"Bearer { tokenHandler.WriteToken(token)}";
+        }
+        
+  ----------------------------------------------------------------------------------------------
+  The auth guard is an angular route guard that's used to prevent unauthenticated or unauthorized users from accessing restricted routes, it does this by implementing the CanActivate interface which allows the guard to decide if a route can be activated with the canActivate() method. If the method returns true the route is activated (allowed to proceed), otherwise if the method returns false the route is blocked.
+  https://jasonwatmore.com/post/2022/12/22/angular-14-role-based-authorization-tutorial-with-example
+  https://www.bezkoder.com/angular-16-jwt-auth/#Create_Role-based_Components
+  
+  import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthGuard } from '../auth/auth.gard';
+import { AuthService } from '../service/auth-service.service';
+import { ProfileService } from '../service/profile.service';
+import { UserService } from '../service/user-service.service';
+
+@Component({
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css']
+})
+
+export class AdminComponent implements OnInit {
+  //
+  //profile$!: Observable<any>;
+  profile: any;
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private authGard: AuthGuard,
+    private profileService: ProfileService
+    ) 
+    { }
+
+  ngOnInit(): void {
+
+
+    if(this.authGard){
+      console.log('Get User profile....');
+      this.profile = this.userService.getUserById(this.authService.getId())
+      .subscribe(
+        (response: any) => {
+          console.log(response)
+        },
+        (error) =>{
+          console.log(error)
+        }
+      );
+      this.profileService.setUser(this.profile)
+
+      console.log('Profile: ' + this.profileService.getUser());
+      console.log('Token: ' + this.authService.getToken());
+    }
+  }
+}
+
+  

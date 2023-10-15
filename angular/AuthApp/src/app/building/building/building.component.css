@@ -1,0 +1,47 @@
+
+.frame{
+    height: 100%;
+}
+.card-container{
+
+}
+
+.card{
+    border-radius: 0px;
+    height: auto;
+    width: auto;
+    color: #222b45;
+    background-color: #fff;
+    padding: 1rem;
+    text-align: center;
+    size: 17px;
+    transition: transform .2s; /* Animation */
+}
+
+.card1 :hover{
+    transform: scale(1);
+}
+
+.input-field{
+    text-align: center;
+}
+
+li {
+    float: left;
+    border-left: 1px solid #bbb;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    /* padding: 14px 16px; */
+    text-decoration: none;
+  }
+  .bi-person-fill-add{
+    font-size: 1.8rem;
+  }
+  li a:hover {
+    /* background-color: #d3d3d3; */
+    color: #1E5099;
+  }
