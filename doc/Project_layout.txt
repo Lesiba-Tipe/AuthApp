@@ -215,7 +215,7 @@ switch (results)
 		return Ok();
 		break;
 }
-
+0625656365
 -----------------------------------------------------------------------------------------------------
 ng g c authentication/forgot-password --skip-tests
 if (!resetPassResult.Succeeded)
@@ -227,3 +227,4 @@ if (!resetPassResult.Succeeded)
 NGULR RESET PASSWORD
 https://code-maze.com/angular-password-reset-functionality-with-aspnet-identity/
 ------------------------------------------------------------------------------------------------------
+https://stackoverflow.com/questions/12144000/using-custom-fonts-using-css
