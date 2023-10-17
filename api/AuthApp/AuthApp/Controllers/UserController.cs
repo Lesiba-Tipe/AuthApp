@@ -31,7 +31,7 @@ namespace AuthApp.Controllers
         }
 
         //[AllowAnonymous]
-        [Authorize("Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
