@@ -30,7 +30,8 @@ namespace AuthApp.Controllers
             userService = new UserService(userManager, context, mapper);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize("Admin")]
         [HttpGet("users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
