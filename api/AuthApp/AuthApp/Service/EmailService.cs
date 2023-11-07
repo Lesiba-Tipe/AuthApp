@@ -11,18 +11,17 @@ namespace AuthApp.Service
     public class EmailService : IEmailService
     {
         //private protected IConfiguration config;
-        private IConfigurationSection googleSMTP, angularClient;
+        private IConfigurationSection googleSMTP; //, angularClient;
         public EmailService(IConfiguration config)
         {
             googleSMTP = config.GetSection("GoogleSMTP");
-            angularClient = config.GetSection("AngularClient");
+            //angularClient = config.GetSection("AngularClient");
         }
        
         public async Task GoogleSMTP(EmailDto emailDto)
         {
             try
             {
-
                 var smtpClient = new SmtpClient(googleSMTP.GetSection("Client").Value)
                 {
                     Port = Convert.ToInt32(googleSMTP.GetSection("Port").Value),
@@ -32,7 +31,7 @@ namespace AuthApp.Service
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(emailDto.Email),
+                    From = new MailAddress(googleSMTP.GetSection("Email").Value),
                     Subject = emailDto.Subject,
                     Body = emailDto.Body,
                     IsBodyHtml = false,
@@ -49,9 +48,9 @@ namespace AuthApp.Service
             }
         }
 
-        public string EmailBodyConfirm(string firstname, int code)
+        public string EmailBodyConfirm(string firstname, string urlToken)
         {
-            return $"Hi {firstname}.\nPlease use this code {code} as your confirmtion.\n\nRegards \nAero Space Team";
+            return $"Hi {firstname}.\nPlease use this link { urlToken } to confirm your email.\n\nRegards \nAero Space Team";
         }
 
         public string EmailBodySendPasswordToken(string firstname, string urlToken)

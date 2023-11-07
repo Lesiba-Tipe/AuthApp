@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AuthApp.Dto
+namespace AuthApp.Input
 {
-    public class RequestPasswordDto
+    public class RequestPasswordInput
     {
         public string Email { get; set; }
         public string Username { get; set; }

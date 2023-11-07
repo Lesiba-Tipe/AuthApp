@@ -1,5 +1,6 @@
 ﻿using AuthApp.Dto;
 using AuthApp.Entity;
+using AuthApp.Input;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace AuthApp.Config
         public MapperConfig()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User,RegisterInput>();
+            CreateMap<User,GoogleRegisterInput>();
             CreateMap<Building, BuildingDto>().ReverseMap();
         }
     }

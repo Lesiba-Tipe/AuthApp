@@ -9,35 +9,38 @@
         <h4 class="margin-top" >Register</h4>
 
         <form [formGroup]="formGroupRegister" (ngSubmit)="register()" class="sign-in-form margin-top" >
-          <!-- <form [formGroup]="formGroupRegister"  #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="sign-in-form margin-top"> -->
+          <!-- <form  [formGroup]="formGroupRegister" (ngSubmit)="register()" class="sign-in-form margin-top"> -->
 
           <div class="row">
             <div class="col-6">
               <div class="input-field">               
                 <input formControlName="firstname"  type="text"  id="FirstName" placeholder="Firstname" class="form-control" aria-label="Firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" />
-                <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
-                  <div *ngIf="f.firstname.errors?.required">Required</div>
+                <div *ngIf="submitted &&  f.firstname.errors" class="invalid-feedback">
+                  <div *ngIf="formGroupRegister.get('firstname')?.hasError('required')">Required</div>
                 </div>
                 
               </div>
             </div>
+
             <div class="col-6">
               <div class="input-field">
                 
                 <input formControlName="lastname" type="text" id="Lastname" placeholder="Lastname" class="form-control" aria-label="Lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" />
-                <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">                 
                   <div *ngIf="f.lastname.errors?.required">Required</div>
                 </div>
               </div>	
-            </div>	
+            </div>
+
           </div>	
 
           <div class="row margin-top">
             <div class="col-6">
               <div class="input-field">
                 
-                <input formControlName="email" [(ngModel)]="email" type="email"  id="Email" placeholder="Email" class="form-control" aria-label="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                <input formControlName="email" type="email"  id="Email" placeholder="Email" class="form-control" aria-label="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                 <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors?.email">Example: someone@company.com</div>
                   <div *ngIf="f.email.errors?.required">Required</div>
                 </div>
               </div>
@@ -45,7 +48,7 @@
             <div class="col-6">
               <div class="input-field">
                 
-                <input formControlName="phoneNumber" type="phoneNumber" ngModel  id="phoneNumber" placeholder="Phone number" class="form-control" aria-label="PhoneNumber" />
+                <input formControlName="phoneNumber" type="phoneNumber" id="phoneNumber" placeholder="Phone number" class="form-control" aria-label="PhoneNumber" />
                 
               </div>	
             </div>	
@@ -63,18 +66,21 @@
             </div>
 
             <div class="col-6">
-              <div class="input-field">              
-                <input formControlName="confirmPassword" type="password"  id="ConfirmPassword" placeholder="Confirm password" class="form-control" aria-label="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
-                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-                  <div *ngIf="f.confirmPassword.errors?.passwordMatchValidator">Password does not match</div>
-                  <div *ngIf="f.confirmPassword.errors?.required">Required</div>
+              <div   class="input-field">              
+                <!-- <input formControlName="confirmPassword" type="password"  id="ConfirmPassword" placeholder="Confirm password" class="form-control" aria-label="confirmPassword" [ngClass]="{ 'is-invalid': (submitted && f.confirmPassword.errors) || formGroupRegister.errors }" /> -->
+
+                <input formControlName="confirmPassword" type="password"  id="ConfirmPassword" placeholder="Confirm password" class="form-control" aria-label="confirmPassword" [ngClass]="{ 'is-invalid': submitted && formGroupRegister.errors }" />
+
+                <div *ngIf="submitted" class="invalid-feedback">
+                  <div *ngIf="formGroupRegister.errors?.['passwordMismatch']">Password does not match</div>
+                  <!-- <div *ngIf="f.confirmPassword.errors?.required">Required</div> -->
                 </div>
               </div>	
             </div>	
 
           </div>	
 
-          <div class="row margin-top">
+          <!-- <div class="row margin-top">
             <div class="col-6">
               <div class="input-field">                
                 <input formControlName="confirmEmail"   type="number" maxlength="6"  id="confirmEmail" placeholder="OTP" class="form-control" />
@@ -87,10 +93,10 @@
               </div>              
             </div> 
                      	
-          </div>	
+          </div>	 -->
 
 
-          <input type="submit"  value="Register" class="btn btn-primary margin-top login-btn">
+          <input type="submit" value="Register" class="btn btn-primary margin-top login-btn">
           
         </form>
 

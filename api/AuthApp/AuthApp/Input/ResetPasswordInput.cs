@@ -1,9 +1,9 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthApp.Dto
+namespace AuthApp.Input
 {
-    public class ResetPasswordDto
+    public class ResetPasswordInput
     {
         [Required]
         public string Email { get; set; }

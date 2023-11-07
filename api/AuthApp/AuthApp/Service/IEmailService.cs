@@ -9,7 +9,7 @@ namespace AuthApp.Service
     public interface IEmailService
     {
         Task GoogleSMTP( EmailDto  emailDto);
-        string EmailBodyConfirm(string firstname, int code);
+        string EmailBodyConfirm(string firstname, string code);
         string EmailBodySendPasswordToken(string firstname, string urlToken);
     }
 }

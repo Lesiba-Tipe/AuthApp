@@ -20,9 +20,10 @@ export class RequestPasswordTokenComponent {
       (response: any) => {
         //this.onSuccess(response) 
         // response is token  
-        console.log("RequestPasswordTokenForm:", response)     
+        console.log("SUCCESS <RequestPasswordTokenForm> : ", response)     
       },
-      () =>{
+      (error) => {
+        console.log("ERROR <RequestPasswordTokenForm> : ", error)     
         
       }
       );

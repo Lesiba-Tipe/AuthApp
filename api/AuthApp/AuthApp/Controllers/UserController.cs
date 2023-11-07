@@ -52,7 +52,7 @@ namespace AuthApp.Controllers
             if (context == null)
                 return NotFound();
 
-            var user = await userService.FindById(id);
+            var user = await userService.FindUserByIdAsync(id);
 
             if (user == null)
                 return NotFound();

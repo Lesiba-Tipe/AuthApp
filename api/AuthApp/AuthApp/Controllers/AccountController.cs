@@ -1,6 +1,7 @@
 ﻿using AuthApp.Data;
 using AuthApp.Dto;
 using AuthApp.Entity;
+using AuthApp.Input;
 using AuthApp.Service;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -52,9 +53,9 @@ namespace AuthApp.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Register([FromBody] UserDto userDto)
+        public async Task<IActionResult> Register([FromBody] RegisterInput registerInput)
         {
-            logger.LogInformation($"Registration attempt for {userDto.Email}");
+            logger.LogInformation($"Registration attempt for {registerInput.Email}");
 
             if (!ModelState.IsValid)
             {
@@ -64,7 +65,7 @@ namespace AuthApp.Controllers
             try
             {
 
-                var results = await userService.CreateAsync(mapper.Map<User>(userDto), userDto.Password);
+                var results = await userService.CreateAsync(mapper.Map<User>(registerInput), registerInput.Password);
 
                 if (!results.Succeeded)
                 {
@@ -75,8 +76,9 @@ namespace AuthApp.Controllers
                     return BadRequest(ModelState);
                 }
 
-                await context.SaveChangesAsync();
-                return Accepted(userDto);
+                //await context.SaveChangesAsync();
+
+                return Accepted(registerInput);
             }
             catch (Exception ex)
             {
@@ -87,9 +89,9 @@ namespace AuthApp.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LogInDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginInput loginInput)
         {
-            logger.LogInformation($"Login attempt for {loginDto.Email}");
+            logger.LogInformation($"Login attempt for {loginInput.Email}");
 
             if (!ModelState.IsValid)
             {
@@ -98,13 +100,13 @@ namespace AuthApp.Controllers
 
             try
             {
-                if (!await authManager.ValidateUserWithPassword(loginDto))
+                if (!await authManager.ValidateUserWithPassword(loginInput))
                 {
                     return Unauthorized("Incorrect Username or password");
                 }
 
 
-                var user = await userService.FindByEmailAsync(loginDto.Email);
+                var user = await userService.FindUserByEmailAsync(loginInput.Email);
                 var roles = await userService.GetRolesAsync(user);
 
                 //var token = 
@@ -124,9 +126,9 @@ namespace AuthApp.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> SignUpWithGoogle([FromBody] UserDto userDto)
+        public async Task<IActionResult> SignUpWithGoogle([FromBody] GoogleRegisterInput googleRegisterInput)
         {
-            logger.LogInformation($"Registration attempt for {userDto.Email}");
+            logger.LogInformation($"Registration attempt for {googleRegisterInput.Email}");
 
             if (!ModelState.IsValid)
             {
@@ -138,7 +140,7 @@ namespace AuthApp.Controllers
                 //Validate if user Exist
 
                 //map User data
-                var user = mapper.Map<User>(userDto);
+                var user = mapper.Map<User>(googleRegisterInput);
 
                 var results = await userService.CreateAsync(user);
 
@@ -153,7 +155,7 @@ namespace AuthApp.Controllers
 
                 context.SaveChanges();
                 //var rolesResults = await userService.AddRoles(userDto);
-                return Accepted(userDto);
+                return Accepted(googleRegisterInput);
             }
             catch (Exception ex)
             {
@@ -164,9 +166,9 @@ namespace AuthApp.Controllers
 
         [HttpPost]
         [Route("google-sign-in")]
-        public async Task<IActionResult> LoginWithGoogle([FromBody] GoogleDto googleDto)
+        public async Task<IActionResult> LoginWithGoogle([FromBody] GoogleLoginInput googleLoginInput)
         {
-            logger.LogInformation($"Login attempt for {googleDto.Email}");
+            logger.LogInformation($"Login attempt for {googleLoginInput.Email}");
 
             if (!ModelState.IsValid)
             {
@@ -175,12 +177,12 @@ namespace AuthApp.Controllers
 
             try
             {
-                if (!await userService.UserExist(googleDto.Email))
+                if (!await userService.UserExist(googleLoginInput.Email))
                 {
                     return Unauthorized("Please sign up, Your email could not be found");
                 }
 
-                var user = await userService.FindByEmailAsync(googleDto.Email);
+                var user = await userService.FindUserByEmailAsync(googleLoginInput.Email);
                 var roles = await userService.GetRolesAsync(user);
                 //var token = 
                 var results = new { jwtToken = "Bearer " + await authManager.GenerateJwtToken(user), roles = roles, id = user.Id };
@@ -194,54 +196,84 @@ namespace AuthApp.Controllers
             }
         }
 
+        /// <summary>
+        /// To confirm Email, This router send email to user with five digit code
+        /// </summary>
+        /// <param name="requestEmailTokenInput"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("request-otp")]
-        public async Task<IActionResult> RequestOTP([FromBody] EmailDto emailDto)
+        [Route("request-email-token")]
+        public async Task<IActionResult> RequestOTP([FromBody] RequestEmailTokenInput requestEmailTokenInput)
         {
-            var code = new Random().Next(111111, 999999);
 
-            var user = await userService.FindByEmailAsync(emailDto.Email);
+            var user = await userService.FindUserByEmailAsync(requestEmailTokenInput.Email);
 
-            var _emailDto = new EmailDto
+            if(user == null)
+            {
+                return BadRequest("User does not exist.");
+            }
+
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+          
+            var url = configuration.GetSection("AngularClient").GetSection("ResetEmailURL").Value;
+
+            var emailDto = new EmailDto
             {
                 Email = user.Email,
-                Body = emailService.EmailBodyConfirm(user.Firstname, code)
-
+                Subject = "Aero Space - Confirm Email",
+                Body = emailService.EmailBodyConfirm(user.Firstname, CreateUrlToken(user.Email, token, url))
             };
 
-            await emailService.GoogleSMTP(_emailDto);
+            await emailService.GoogleSMTP(emailDto);
 
             return Accepted();
         }
 
         [HttpPost]
-        [Route("request-password-token")]
-        public async Task<IActionResult> RequestPasswordToken([FromBody] RequestPasswordDto requestPasswordDto)
+        [Route("confirm-email")]
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailInput confrimEmailInput)
         {
-            //Request Token
-            var user = await userService.FindByEmailAsync(requestPasswordDto.Email);
+            var user = await userManager.FindByEmailAsync(confrimEmailInput.Email);
 
             if (user == null)
-                return BadRequest("User does exist in current database");
+                return NotFound();
 
-            var token = await authManager.RequestPasswordToken(requestPasswordDto);
+            var results = await userManager.ConfirmEmailAsync(user, confrimEmailInput.Token);
 
-            var param = new Dictionary<string, string?>
+            if (!results.Succeeded)
             {
-                {"token", token },
-                {"email", requestPasswordDto.Email }
-            };
+                foreach (var error in results.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+                return BadRequest(ModelState);
+            }
 
-            var urlToken = QueryHelpers.AddQueryString(
-                configuration.GetSection("AngularClient").GetSection("ResetPasswordURL").Value, 
-                param);
+            return Ok();
+        }
+
+
+        [HttpPost]
+        [Route("request-password-token")]
+        public async Task<IActionResult> RequestPasswordToken([FromBody] RequestPasswordInput requestPasswordDto)
+        {
+            //Request Token
+            var user = await userService.FindUserByEmailAsync(requestPasswordDto.Email);
+
+            if (user == null)
+                return BadRequest("User does not exist.");
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            var url = configuration.GetSection("AngularClient").GetSection("ResetPasswordURL").Value;
 
             var emailDto = new EmailDto
             {
                 Email = user.Email,
-                Body = emailService.EmailBodySendPasswordToken(user.Firstname, urlToken),
-
+                Subject = "Aero Space - Reset Password",
+                Body = emailService.EmailBodySendPasswordToken(user.Firstname, CreateUrlToken(user.Email, token, url))
             };
+            
             //Send Email
             await emailService.GoogleSMTP(emailDto);
 
@@ -250,28 +282,37 @@ namespace AuthApp.Controllers
 
         [HttpPost]
         [Route("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordInput resetPasswordDto)
         {
             // Request Token | Email | Token | Password
 
-            var user = userService.FindByEmailAsync(resetPasswordDto.Email);
+            var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
             if (user == null)
-                return NotFound();
+                return BadRequest();
 
-            var results = await authManager.ResetPassword(resetPasswordDto);
+            var results = await userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
 
             if (!results.Succeeded)
             {
-                //foreach (var error in results.Errors)
-                //{
-                //    ModelState.AddModelError(error.Code, error.Description);
-                //}
-                var errors = results.Errors.Select(e => e.Description);
-                return BadRequest(new { Errors = errors });
-                //return BadRequest(ModelState);
+                foreach (var error in results.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+                return BadRequest(ModelState);
             }
             
             return Ok();
+        }
+    
+        private string CreateUrlToken(string email, string token, string url)
+        {
+            var param = new Dictionary<string, string>
+            {
+                {"token", token },
+                {"email", email }
+            };
+
+            return QueryHelpers.AddQueryString(url,param);
         }
     }
 }

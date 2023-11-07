@@ -15,13 +15,13 @@ export class HomeComponent {
 
    ngOnInit(): void {
     //console.log("WEATHER")
-    this.weatherService.getWeather().subscribe(
-      response =>{
-        console.log(`RESPONSE: ${response}`)
-      },
-      error =>{
-        console.log(`ERROR: ${error}`)
-      }
-    )
+    // this.weatherService.getWeather().subscribe(
+    //   response =>{
+    //     console.log(`RESPONSE: ${response}`)
+    //   },
+    //   error =>{
+    //     console.log(`ERROR: ${error}`)
+    //   }
+    // )
   }
 }

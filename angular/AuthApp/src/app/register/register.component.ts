@@ -26,12 +26,12 @@ export class RegisterComponent {
 
     this.formGroupRegister = fb.group({
       firstname: ['', Validators.required],
-      lastname:['', Validators.required],
-      email:  ['', [Validators.required, Validators.email]],
-      phoneNumber:'',
+       lastname:['', Validators.required],
+       email:  ['', [Validators.required, Validators.email]],
+       //confirmEmail: ['', Validators.required],
+       phoneNumber:'',
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword:['', Validators.required],
-      confirmEmail: ['', Validators.required],
       
     },
     {
@@ -47,15 +47,19 @@ export class RegisterComponent {
     this.submitted = true;
 
     if(this.formGroupRegister.valid){
-      console.log('Password: ', this.formGroupRegister.get('password')?.value)
+      console.log('this.registerForm.valid')
+      console.log('Firstname: ', this.formGroupRegister.get('firstname')?.value)
       console.log('for data: ', this.formGroupRegister.value)
-      //this.registerUser(this.formGroupRegister);
+      this.registerUser(this.formGroupRegister);
       
+    }else{
+      console.log("ERRROR<Register>: ", this.formGroupRegister.errors)
     }
     
   }
 
   registerUser(form: FormGroup){
+
     this.userService.register(form.value).subscribe(
       (response: any) => {
           console.log('Response from API: ' + response);
@@ -103,7 +107,7 @@ export class RegisterComponent {
         const password = control.get('password');
         const confirmPassword = control.get('confirmPassword');
     
-        if (password && confirmPassword && password.value !== confirmPassword.value) {
+        if (password && confirmPassword && password.value != confirmPassword.value) {
           console.log('passwordMismatch:')
           return { passwordMismatch: true };
         }
@@ -157,6 +161,7 @@ export class RegisterComponent {
     );     
   }
 
+  //=====================================================
   OTP : number = 0
   email : string = "";
  

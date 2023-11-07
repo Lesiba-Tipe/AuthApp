@@ -1,5 +1,6 @@
 ﻿using AuthApp.Dto;
 using AuthApp.Entity;
+using AuthApp.Input;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +26,7 @@ namespace AuthApp.Service
             //this.userService = userService;
             jwtOptions = configuration.GetSection("JwtOptions");
         }
-
+ 
         public async Task<string> GenerateJwtToken(User user)
         {
             //var jwtOptions = configuration.GetSection("JwtOptions");
@@ -40,12 +41,12 @@ namespace AuthApp.Service
             return results;
         }
 
-        public async Task<bool> ValidateUserWithPassword(LogInDto _user)
+        public async Task<bool> ValidateUserWithPassword(LoginInput loginInput)
         {
             //Find username
-            var user = await userManager.FindByEmailAsync(_user.Email);
+            var user = await userManager.FindByEmailAsync(loginInput.Email);
 
-            return (user != null && await userManager.CheckPasswordAsync(user, _user.Password));
+            return (user != null && await userManager.CheckPasswordAsync(user, loginInput.Password));
         }
        
         private async Task<List<Claim>> GetClaims(User user)
@@ -77,7 +78,7 @@ namespace AuthApp.Service
             return token;
         }
 
-        public async Task<string> RequestPasswordToken(RequestPasswordDto requestPasswordDto)
+        public async Task<string> RequestPasswordToken(RequestPasswordInput requestPasswordDto)
         {
             var user = await userManager.FindByEmailAsync(requestPasswordDto.Email);
 
@@ -86,7 +87,7 @@ namespace AuthApp.Service
             return passwordToken;
         }
 
-        public async Task<IdentityResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+        public async Task<IdentityResult> ResetPassword(ResetPasswordInput resetPasswordDto)
         {
             var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
 
@@ -94,6 +95,23 @@ namespace AuthApp.Service
 
             return results;
         }
-      
+
+        public async Task<string> RequestEmailToken(RequestEmailTokenInput requestEmailTokenInput)
+        {
+            var user = await userManager.FindByEmailAsync(requestEmailTokenInput.Email);
+
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            return token; 
+        }
+
+        public async Task<IdentityResult> ConfirmEmail(ConfirmEmailInput confrimEmailInput)
+        {
+            var user = await userManager.FindByEmailAsync(confrimEmailInput.Email);
+
+            var results = await userManager.ConfirmEmailAsync(user, confrimEmailInput.Token);
+
+            return results;
+        }
     }
 }

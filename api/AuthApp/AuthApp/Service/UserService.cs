@@ -13,16 +13,17 @@ using System.Threading.Tasks;
 
 namespace AuthApp.Service
 {
-    public class UserService : GenericRepository<User>
+    public class UserService //: GenericRepository<User>
     { 
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
-        //private readonly AuthDBContext context;
+        private readonly AuthDBContext context;
        
-        public UserService(UserManager<User> userManager, AuthDBContext context, IMapper mapper) : base(context)
+        public UserService(UserManager<User> userManager, AuthDBContext context, IMapper mapper) //: base(context)
         {
             this.userManager = userManager;
             this.mapper = mapper;
+            this.context = context;
         }
 
         public async Task<IdentityResult> CreateAsync(User user, string password)
@@ -32,10 +33,29 @@ namespace AuthApp.Service
         }
 
 
-        public async Task<IdentityResult> CreateAsync(User user)
+        public async Task<IdentityResult> CreateAsync(User user)    //No password
         {
             user.Id = Guid.NewGuid().ToString();
             return await userManager.CreateAsync(user);
+        }
+
+        public async Task<User> FindUserByEmailAsync(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            return user;
+        }
+
+        public async Task<User> FindUserByIdAsync(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+            return user;
+        }
+
+        public async Task<bool> UserExist(string email)
+        {
+            var user = await FindUserByEmailAsync(email);
+
+            return user != null;
         }
 
         public async Task<IdentityResult> AddRoles(RolesDto rolesDto)
@@ -43,13 +63,18 @@ namespace AuthApp.Service
             if (rolesDto.Roles == null)
                 rolesDto.Roles.Add("User");   //Set Default Role if Null
 
-            var user = await userManager.FindByIdAsync(rolesDto.Id);
-
+            var user = await FindUserByIdAsync(rolesDto.Id);
+            
             var results = await userManager.AddToRolesAsync(user, rolesDto.Roles);
 
             return results;
         }
 
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            var users = await context.Users.ToListAsync();
+            return users;
+        }
         public Task Update(string id, UserDto userDto)
         {          
             
@@ -62,23 +87,7 @@ namespace AuthApp.Service
             return await userManager.GetRolesAsync(user);
         }
 
-        public async Task<User> FindByEmailAsync(string email)
-        {
-            var user = await userManager.FindByEmailAsync(email);
-            //var roles = await userManager.GetRolesAsync(user);
-            //userManager.cre
-            //var userDto = mapper.Map<UserDto>(user);
-            //userDto.Roles = roles;
-
-            return user;
-        }
        
-        public async Task<bool> UserExist(string email)
-        {
-            var user = await userManager.FindByIdAsync(email);
-
-            return user != null;
-        }
 
         public async Task<int> Update(UserDto userDto)
         {
