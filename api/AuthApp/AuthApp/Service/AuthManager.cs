@@ -78,40 +78,5 @@ namespace AuthApp.Service
             return token;
         }
 
-        public async Task<string> RequestPasswordToken(RequestPasswordInput requestPasswordDto)
-        {
-            var user = await userManager.FindByEmailAsync(requestPasswordDto.Email);
-
-            var passwordToken = await userManager.GeneratePasswordResetTokenAsync(user);
-
-            return passwordToken;
-        }
-
-        public async Task<IdentityResult> ResetPassword(ResetPasswordInput resetPasswordDto)
-        {
-            var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
-
-            var results = await userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
-
-            return results;
-        }
-
-        public async Task<string> RequestEmailToken(RequestEmailTokenInput requestEmailTokenInput)
-        {
-            var user = await userManager.FindByEmailAsync(requestEmailTokenInput.Email);
-
-            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            return token; 
-        }
-
-        public async Task<IdentityResult> ConfirmEmail(ConfirmEmailInput confrimEmailInput)
-        {
-            var user = await userManager.FindByEmailAsync(confrimEmailInput.Email);
-
-            var results = await userManager.ConfirmEmailAsync(user, confrimEmailInput.Token);
-
-            return results;
-        }
     }
 }
