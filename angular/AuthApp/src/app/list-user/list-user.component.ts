@@ -34,7 +34,7 @@ export class ListUserComponent implements OnInit {
         this.dataSource = new MatTableDataSource<any>(response);  //response; 
       },
       error => {
-
+        console.log('User-List-ERROR',error)
       }
     )
   }

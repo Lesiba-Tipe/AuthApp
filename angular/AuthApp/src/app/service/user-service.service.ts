@@ -53,6 +53,19 @@ export class UserService {
     });
   }
 
+  requestEmailToken(entry: any){
+    return this.httpclient.post(this.PATH_OF_API + 'Account/request-email-token', entry, {
+      headers: this.requestHeader,
+    });
+  }
+
+  confirmEmail(entry: any){
+    return this.httpclient.post(this.PATH_OF_API + 'Account/confirm-email', entry, {
+      headers: this.requestHeader,
+    });
+  }
+
+
   //SOCIAL
   private decodeJwtToken(googleJwtToken : any) : any{
     const decoder = new JwtHelperService();
@@ -93,9 +106,7 @@ export class UserService {
   public getUserById(id: string) {
     return this.httpclient.get<any>(this.PATH_OF_API + `user/${id}`);
   }
-
-  
-  
+ 
   updateUser(id: number | string, entry: any) {
     return this.httpclient.put(this.PATH_OF_API + `user/${id}`, entry);
   }

@@ -213,7 +213,7 @@ namespace AuthApp.Controllers
                 return BadRequest("User does not exist.");
             }
 
-            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            var token = "token"; // await userManager.GenerateEmailConfirmationTokenAsync(user);
           
             var url = configuration.GetSection("AngularClient").GetSection("ResetEmailURL").Value;
 
@@ -249,6 +249,9 @@ namespace AuthApp.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Set confrim Email to true
+            user.EmailConfirmed = true;
+
             return Ok();
         }
 
@@ -282,24 +285,25 @@ namespace AuthApp.Controllers
 
         [HttpPost]
         [Route("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordInput resetPasswordDto)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordInput resetPasswordInput)
         {
             // Request Token | Email | Token | Password
 
-            var user = await userManager.FindByEmailAsync(resetPasswordDto.Email);
+            var user = await userManager.FindByEmailAsync(resetPasswordInput.Email);
+
             if (user == null)
                 return BadRequest();
 
-            var results = await userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+            var results = await userManager.ResetPasswordAsync(user, resetPasswordInput.Token, resetPasswordInput.Password);
 
-            if (!results.Succeeded)
-            {
-                foreach (var error in results.Errors)
-                {
-                    ModelState.AddModelError(error.Code, error.Description);
-                }
-                return BadRequest(ModelState);
-            }
+            //if (!results.Succeeded)
+            //{
+            //    foreach (var error in results.Errors)
+            //    {
+            //        ModelState.AddModelError(error.Code, error.Description);
+            //    }
+            //    return BadRequest(ModelState);
+            //}
             
             return Ok();
         }

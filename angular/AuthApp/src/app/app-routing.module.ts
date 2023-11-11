@@ -15,6 +15,9 @@ import { BuildingComponent } from './building/building/building.component';
 import { VisitorListComponent } from './visitor-list/visitor-list.component';
 import { RequestPasswordTokenComponent } from './request-password-token/request-password-token.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RequestConfirmEmailTokenComponent } from './request-confirm-email-token/request-confirm-email-token.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { MessegesComponent } from './messeges/messeges.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,9 +33,12 @@ const routes: Routes = [
   { path: 'visitors-list', component: VisitorListComponent },
   { path: 'request-password-token', component: RequestPasswordTokenComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'request-confirm-email-token', component: RequestConfirmEmailTokenComponent },
+  { path: 'confirm-email', component: ConfirmEmailComponent },
+  { path: 'messeges', component: MessegesComponent },
   
   //{ path: 'admin', canActivate: [AuthGuard], data: { role: ['role'] }, loadChildren: () => import('./admin/admin.component').then(m => m.AdminComponent) },
-  // ...
+  //
 ];
 
 @NgModule({

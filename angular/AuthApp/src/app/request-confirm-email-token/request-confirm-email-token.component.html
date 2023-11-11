@@ -4,9 +4,9 @@
       <div class="signin-signup">
         
         <img style="height: auto; width: 80%; " src="/assets/img/logo-Asset272x.png" class=" rounded mx-auto d-block" alt="logo">
-        <h4 class="margin-top" style="color:#222b45;" >Request Password Reset</h4>
+        <h4 class="margin-top" style="color:#222b45;" >Request Confirm email Token</h4>
 
-        <form #RequestPasswordTokenForm="ngForm" (ngSubmit)="RequestPasswordToken(RequestPasswordTokenForm)" class="sign-in-form" >
+        <form #requestConfirmEmailToken="ngForm" (ngSubmit)="RequestConfirmEmailToken(requestConfirmEmailToken)" class="sign-in-form" >
 
           <div class="input-field margin-top">
             <i class="bi bi-person-fill" style="color: #222b45;"></i>
@@ -25,9 +25,10 @@
       </div>
 
     </div>
-    <!-- On Success -->
+    <!-- On Success --> 
     <div *ngIf="success" class="on-password-request-success alert-success">
         Email have been sent successfully, Please check your email
     </div>
 
 </div>
+

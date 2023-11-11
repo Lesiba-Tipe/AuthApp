@@ -29,6 +29,10 @@ import { BuildingComponent } from './building/building/building.component';
 import { VisitorListComponent } from './visitor-list/visitor-list.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RequestPasswordTokenComponent } from './request-password-token/request-password-token.component';
+import { RequestConfirmEmailTokenComponent } from './request-confirm-email-token/request-confirm-email-token.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { NotAuthaurizedComponent } from './not-authaurized/not-authaurized.component';
+import { MessegesComponent } from './messeges/messeges.component';
 
 
 
@@ -49,6 +53,10 @@ import { RequestPasswordTokenComponent } from './request-password-token/request-
     VisitorListComponent,
     ResetPasswordComponent,
     RequestPasswordTokenComponent,
+    RequestConfirmEmailTokenComponent,
+    ConfirmEmailComponent,
+    NotAuthaurizedComponent,
+    MessegesComponent,
   ],
   imports: [
     BrowserModule,

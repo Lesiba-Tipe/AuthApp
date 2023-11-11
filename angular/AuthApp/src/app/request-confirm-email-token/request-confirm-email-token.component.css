@@ -1,0 +1,48 @@
+/* Primary-color: #222b45; 
+   Secondary-color: white
+*/
+
+.login-container{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #222b45; /* Optional: Just for visualization */   
+    color: #222b45;
+}
+
+.forms-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:white;
+    border-radius: 2px;
+    /* box-shadow: 0px 2px 4px rgb(211, 210, 210); */
+}
+.signin-signup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+}
+.signin-signup h6,h2,h5{
+    text-align: center;
+}
+.sign-in-form{
+    width: 100%;
+}
+
+.margin-top{
+    margin-top: 20px;   
+}
+
+.login-btn{
+    width: 100%;
+}
+
+input{
+    text-align: center;
+}

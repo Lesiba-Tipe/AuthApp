@@ -66,7 +66,7 @@ namespace AuthApp.Controllers
             return userDto;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpPut("update/{id}")]
         //[Route("update")]
         public async Task<ActionResult<UserDto>> UpdateUser(string id, [FromBody]UserDto userDto)
