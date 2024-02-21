@@ -30,7 +30,7 @@ import { AuthService } from '../service/auth-service.service';
       return next.handle(req).pipe(
           catchError(
               (err:HttpErrorResponse) => {
-                  console.log('Interceptor Error:' + err.status);
+                  console.log('Interceptor Error:' + err.status, ':', err);
                   if(err.status === 401) {
                       this.router.navigate(['/login']);
                   } else if(err.status === 403) {

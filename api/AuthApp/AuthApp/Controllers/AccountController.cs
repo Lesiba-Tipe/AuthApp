@@ -196,11 +196,7 @@ namespace AuthApp.Controllers
             }
         }
 
-        /// <summary>
-        /// To confirm Email, This router send email to user with five digit code
-        /// </summary>
-        /// <param name="requestEmailTokenInput"></param>
-        /// <returns></returns>
+
         [HttpPost]
         [Route("request-email-token")]
         public async Task<IActionResult> RequestOTP([FromBody] RequestEmailTokenInput requestEmailTokenInput)

@@ -1,64 +1,43 @@
 /* Primary-color: #222b45; */
 
-  
-  .mat-header -cell{
-      background-color: #2E395E;
-  }
-  
-  .mat-column-lastnames{
-      width: 100%;
-      color: rgb(146, 69, 69);     
-  }
-  
-  
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    /* background-color: #222b45; */
-  }
-  
-  li {
-    float: left;
-    border-left: 1px solid #bbb;
-  }
-  
-  li a {
-    display: block;
-    color: white;
-    text-align: center;
-    /* padding: 14px 16px; */
-    text-decoration: none;
-  }
   .bi-person-fill-add{
     font-size: 1.8rem;
   }
-  li a:hover {
-    /* background-color: #d3d3d3; */
-    color: #1E5099;
-  }
   
-  .sign-in-form{
-    width: 100%;
-  }
-  
-  /* clickable-table.component.css */
+  /* TABLE */
+
   table {
     width: 100%;
     border-collapse: collapse;
+    
   }
   
   tr.mat-row {
     cursor: pointer;
   }
-  
-  tr.mat-row:hover {
-    background-color: #8f1c1c; /* Change to your preferred hover color */
-  }
 
   .modal-body{
     display: grid;
     grid-column: 1fr 2fr;
+  }
+
+  .demo-table {
+    width: 100%;
+  }
+  
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+    background-color: rgb(156, 112, 197);
+    color: #f3f3f3;
+  }
+  
+  .demo-row-is-clicked {
+    font-weight: bold;
   }
   

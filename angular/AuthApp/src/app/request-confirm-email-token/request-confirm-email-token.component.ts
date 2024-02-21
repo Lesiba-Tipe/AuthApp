@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { UserService } from '../service/user-service.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { AccountService } from '../service/account.service';
 
 @Component({
   selector: 'app-request-confirm-email-token',
@@ -12,13 +12,13 @@ export class RequestConfirmEmailTokenComponent {
   success = false;
 
   constructor(
-    private userService: UserService,
-    private router: Router
+    private router: Router,
+    private accountService: AccountService
   ){}
 
   RequestConfirmEmailToken(requestConfirmEmailToken: NgForm){
 
-    this.userService.requestEmailToken(requestConfirmEmailToken.value).subscribe(
+    this.accountService.requestEmailToken(requestConfirmEmailToken.value).subscribe(
       (response) =>{
         alert('Email have been sent successfully, please check your email')
         this.router.navigate(['/home']) // Navigate to home

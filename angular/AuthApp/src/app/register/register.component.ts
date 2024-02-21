@@ -5,6 +5,7 @@ import { UserService } from '../service/user-service.service';
 import { environment } from 'src/environment/environment';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { IEmailDto } from 'src/data/EmailDto';
+import { AccountService } from '../service/account.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ export class RegisterComponent {
   constructor(
     private userService: UserService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService
   ){
 
     this.formGroupRegister = fb.group({
@@ -60,7 +62,7 @@ export class RegisterComponent {
 
   registerUser(form: FormGroup){
 
-    this.userService.register(form.value).subscribe(
+    this.accountService.register(form.value).subscribe(
       (response: any) => {
           console.log('Response from API: ' + response);
           //this.registeredSuccessfully = true;
@@ -137,7 +139,7 @@ export class RegisterComponent {
   }
 
   handleCredentialResponse(credentialResponse: CredentialResponse) {
-    this.userService.signInWithGoogle(credentialResponse).subscribe(
+    this.accountService.signInWithGoogle(credentialResponse).subscribe(
       (response: any) => {  //Returns decoded JWT
         //this.onSuccess(response)               
         console.log('GOOGLE: ' + response)
@@ -170,7 +172,7 @@ export class RegisterComponent {
     if(email !== ""){
       console.log('OTP: ',email)
     
-      this.userService.requstOTP(email).subscribe(
+      this.accountService.requstOTP(email).subscribe(
         (response: any) => {
           
           console.log('OTP CODE: ',response.code)

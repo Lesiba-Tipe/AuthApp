@@ -1,13 +1,11 @@
 ﻿using AuthApp.Data;
 using AuthApp.Dto;
 using AuthApp.Entity;
-using AuthApp.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -86,8 +84,6 @@ namespace AuthApp.Service
         {
             return await userManager.GetRolesAsync(user);
         }
-
-       
 
         public async Task<int> Update(UserDto userDto)
         {

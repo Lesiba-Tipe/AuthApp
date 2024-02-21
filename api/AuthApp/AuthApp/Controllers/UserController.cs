@@ -4,7 +4,6 @@ using AuthApp.Entity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -31,7 +30,7 @@ namespace AuthApp.Controllers
         }
 
         //[AllowAnonymous]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -98,25 +97,7 @@ namespace AuthApp.Controllers
             return (context.Users?.Any(user => user.Email == email)).GetValueOrDefault();
         }
        
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("add-roles")]
-        public async Task<IActionResult> AddRoles([FromBody] RolesDto rolesDto)
-        {
-            //Add Roles
-            var results = await userService.AddRoles(rolesDto);
-
-            if (!results.Succeeded)
-            {
-                foreach (var error in results.Errors)
-                {
-                    ModelState.AddModelError(error.Code, error.Description);
-                }
-                return BadRequest(ModelState);
-            }
-
-            return Accepted(results);
-        }
+        
 
     }
 }

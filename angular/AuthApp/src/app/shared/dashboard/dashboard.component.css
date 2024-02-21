@@ -43,15 +43,19 @@ ul {
 .sidebar {
   height: 100%; 
   margin-top: 5rem;
-  width: 10rem;
+  margin-left: 3rem;
+  width: 15rem;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   background-color: rgb(255, 255, 255);
+  border: 2px solid #1E5099;
+  border-radius: 7px;
   overflow-x: hidden;
   padding-top: 16px;
- 
+  padding-left: .5em;
+  padding-right: .5em;
 }
 
 /* Style sidebar links */

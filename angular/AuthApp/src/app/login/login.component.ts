@@ -3,12 +3,12 @@ import { AuthService } from '../service/auth-service.service';
 import { UserService } from '../service/user-service.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { AuthGuard } from '../auth/auth.gard';
 import { ProfileService } from '../service/profile.service';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { RolesConfigService } from '../service/roles-config.service';
+import { Profile } from 'src/data/profile';
+import { AccountService } from '../service/account.service';
 
 
 
@@ -19,6 +19,7 @@ import { RolesConfigService } from '../service/roles-config.service';
 })
 export class LoginComponent {
 
+
   invalidLogin: boolean = false;
   registeredSuccessfully: boolean = false;
 
@@ -28,9 +29,10 @@ export class LoginComponent {
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
-    private rolesConfigService: RolesConfigService
+    private rolesConfigService: RolesConfigService,
     //private authGard: AuthGuard,
-    //private profileService: ProfileService,
+    private profileService: ProfileService,
+    private accountService: AccountService
   ) {
 
   }
@@ -41,7 +43,7 @@ export class LoginComponent {
 
   handleCredentialResponse(credentialResponse: CredentialResponse) {
 
-    this.userService.signInWithGoogle(credentialResponse).subscribe(
+    this.accountService.signInWithGoogle(credentialResponse).subscribe(
       (response: any) => {
         console.log('On Success' + response)
         this.onSuccess(response)               
@@ -69,7 +71,7 @@ export class LoginComponent {
   login(loginForms: NgForm) {
     console.log('log-in button pressed.... ')
     
-    this.userService.login(loginForms.value).subscribe(
+    this.accountService.login(loginForms.value).subscribe(
       (response: any) => {
         this.onSuccess(response)        
       },
@@ -117,7 +119,7 @@ export class LoginComponent {
       document.getElementById("btn_googleSignIn"),
         { theme: "outline", size: "large", width: "100%" } 
       );
-      // @ts-ignore
+      // @ts-ignore 
       google.accounts.id.prompt((notification: PromptMomentNotification) => {});
     };
   }
@@ -133,31 +135,26 @@ export class LoginComponent {
 
         const role = response.roles[0];
         console.log('ROLE:', role)
-        switch (role) {
-          case 'Admin': 
-            this.router.navigate(['/admin']);
-            break;
-          case 'Property-Administrator':
-            this.router.navigate(['/user']);     
-            break;
-          case 'Caretaker':
-            this.router.navigate(['/user']);        
-            break;
-          case 'Landlord':
-            this.router.navigate(['/user']);
-            break;
-          case 'Access-control':
-            this.router.navigate(['/user']);             
-            break;
-          case 'Tenant':
-            this.router.navigate(['/user']);           
-            break;
-          case 'Visitor':            
-            break;
-          default:
-           this.router.navigate(['/user']);
-           break;
-        }     
+
+        //Initialize user
+        //this.initilize_Profile()
+
+        this.router.navigate(['/home']);       
+  }
+
+  initilize_Profile(){
+    this.userService.getUserById(this.authService.getId()).subscribe(
+      (response: any) => {
+        const profile: Profile = response;
+        profile.roles = this.authService.getRoles();
+        this.profileService.setUser(profile);
+        console.log('PROFILE',profile)
+
+      },
+      (error) =>{
+        console.log('Failed to get Profile by Id: ',error);
+      }
+    );      
   }
 
 }

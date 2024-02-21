@@ -1,3 +1,34 @@
+mock ups
+	{
+		https://graphicsfamily.com/downloads/wood-3d-logo-mockups/
+		https://graphicsfamily.com/downloads/free-psd-rubber-stamp-3d-logo-mockup/
+		https://graphicsfamily.com/downloads/3d-logo-mockup-on-office-room-black-wall/
+		https://graphicsfamily.com/downloads/photorealistic-logo-mockup-on-leather-background/
+		https://graphicsfamily.com/downloads/stamping-leather-logo-mockup/
+		https://graphicsfamily.com/downloads/silver-logo-mockup-on-steel-background-texture/
+		
+		
+	}
+Engineering Course{
+	https://learn.saylor.org/course/view.php?id=731
+}
+https://event.on24.com/wcc/r/4384034/CBA77CD670F1E9C6938BE4B2D422A018
+
+Clerestory Roof
+https://www.architecturaldesigns.com/house-plans/3-bed-modern-house-plan-under-2000-square-feet-with-detached-garage-70823mk
+Live app at https://authapp-397212.web.app/ and https://authapp-397212.firebaseapp.com/
+
+https://godesign.pk/
+
+https://vercel.com
+render.com
+
+https://express-server-dmq0.onrender.com/send-review
+
+https://moshweutipe3.wixsite.com/tipe3
+
+
+https://render.com/docs/custom-domains#adding-a-wildcard-custom-domain
 https://demo.aspnetzero.com/app/admin/users
 https://geeksarray.com/blog/how-to-use-automapper-in-aspnet-core-web-api
 						   ----------------------AERO-SPACE-----------------
@@ -237,3 +268,21 @@ https://www.c-sharpcorner.com/article/policy-based-role-based-authorization-in-a
 LOGGING
 https://stackify.com/log4net-guide-dotnet-logging/
 ------------------------------------------------------------------------------------------------------------
+
+
+
+[SITE ADMINISTRATION] - Property-Admin
+
+	> General - (settings,)
+	> Users[ Account[user-list,add-user], Permossions[define-role,manage roles]]
+	> Buildings[crud]
+	> Access Control [Manage access control settings]
+
+[ PROPERTY ] - Property-Caretaker
+	> Buildings
+	> Apartments
+
+
+=B4-(C4*100)
+
+https://www.w3schools.com/howto/howto_css_image_overlay.asp

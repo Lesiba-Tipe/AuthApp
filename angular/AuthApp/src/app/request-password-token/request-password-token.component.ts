@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UserService } from '../service/user-service.service';
 import { Router } from '@angular/router';
+import { AccountService } from '../service/account.service';
 
 @Component({
   selector: 'app-request-password-token',
@@ -12,14 +12,14 @@ export class RequestPasswordTokenComponent {
  
   success = false;
   constructor(
-    private userService: UserService,
+    private accountService: AccountService,
     private router: Router
   ) {}
   
   RequestPasswordToken(RequestPasswordTokenForm: NgForm) {
     console.log('log-in button pressed.... ')
     
-    this.userService.requestPasswordToken(RequestPasswordTokenForm.value).subscribe(
+    this.accountService.requestPasswordToken(RequestPasswordTokenForm.value).subscribe(
       (response: any) => { 
         this.success = true        
         //this.router.navigate(['/'])

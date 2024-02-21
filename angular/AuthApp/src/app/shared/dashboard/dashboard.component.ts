@@ -5,6 +5,7 @@ import { AuthGuard } from 'src/app/auth/auth.gard';
 import { AuthService } from 'src/app/service/auth-service.service';
 import { ProfileService } from 'src/app/service/profile.service';
 import { UserService } from 'src/app/service/user-service.service';
+import { Profile } from 'src/data/profile';
 
 
 @Component({
@@ -16,9 +17,10 @@ import { UserService } from 'src/app/service/user-service.service';
 export class DashboardComponent implements OnInit {
 
   private _profile$!: Observable<any>;
-  profile: any = {} as any;
+  profile: Profile = {} as Profile;
   count = 0
 
+  admin = false;
   property_admin = false;
   caretaker = false;
   landlord = false;
@@ -38,6 +40,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initilize_Profile()
+    this.profile = this.profileService.getUser();
+
     console.log('ngOnInit(): DashboardComponent ',this.count++)
   }
 
@@ -96,5 +100,8 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  sendValue(item:string){
+    this.router.navigate(['/',item])
+  }
 
 }

@@ -13,6 +13,7 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 import { UserService } from './service/user-service.service';
 import { AuthService } from './service/auth-service.service';
+import { AccountService } from './service/account.service';
 import { ICrudeService } from './service/icrude.service';
 
 import { AuthGuard } from './auth/auth.gard';
@@ -33,6 +34,12 @@ import { RequestConfirmEmailTokenComponent } from './request-confirm-email-token
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { NotAuthaurizedComponent } from './not-authaurized/not-authaurized.component';
 import { MessegesComponent } from './messeges/messeges.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+
+import { MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 
 
@@ -57,6 +64,7 @@ import { MessegesComponent } from './messeges/messeges.component';
     ConfirmEmailComponent,
     NotAuthaurizedComponent,
     MessegesComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +75,7 @@ import { MessegesComponent } from './messeges/messeges.component';
     BrowserAnimationsModule,
     MatTableModule,
     ReactiveFormsModule,
+    MatFormFieldModule, MatInputModule, MatSortModule, MatPaginatorModule
   ],
   providers: [
     AuthGuard,
@@ -77,6 +86,7 @@ import { MessegesComponent } from './messeges/messeges.component';
     },
     AuthService,
     UserService,
+    AccountService,
     ICrudeService 
   ],
   bootstrap: [AppComponent]

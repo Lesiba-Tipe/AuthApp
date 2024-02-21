@@ -6,6 +6,7 @@ import { ProfileService } from '../service/profile.service';
 import { UserService } from '../service/user-service.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -14,6 +15,10 @@ import { NgForm } from '@angular/forms';
 })
 
 export class AdminComponent {
-  
+  private item : any;
+  constructor(private activatedRoot: ActivatedRoute){}
 
+  ngOnInit() {
+    this.item = this.activatedRoot.snapshot.paramMap.get('item');
+  }
 }

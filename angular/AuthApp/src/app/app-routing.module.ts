@@ -18,15 +18,16 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { RequestConfirmEmailTokenComponent } from './request-confirm-email-token/request-confirm-email-token.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { MessegesComponent } from './messeges/messeges.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: LandingPageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'user', component: UserComponent },
   { path: 'users', component: ListUserComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'users/:id', component: UserDetailsComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'site-administration', component: AdminComponent },
   { path: 'forbidden', component: ForbiddenComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'building', component: BuildingComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'request-confirm-email-token', component: RequestConfirmEmailTokenComponent },
   { path: 'confirm-email', component: ConfirmEmailComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'messeges', component: MessegesComponent },
   
   //{ path: 'admin', canActivate: [AuthGuard], data: { role: ['role'] }, loadChildren: () => import('./admin/admin.component').then(m => m.AdminComponent) },

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserService } from '../service/user-service.service';
 import { Router } from '@angular/router';
+import { AccountService } from '../service/account.service';
 
 @Component({
   selector: 'app-confirm-email',
@@ -12,7 +12,7 @@ export class ConfirmEmailComponent {
   success = false;
   confrimEmailInput : any 
   constructor(
-    private userService: UserService,
+    private accountService: AccountService,
     private router: Router
   )
   {
@@ -24,7 +24,7 @@ export class ConfirmEmailComponent {
   }
 
   confirmEmail(){
-    this.userService.confirmEmail(this.confrimEmailInput).subscribe(
+    this.accountService.confirmEmail(this.confrimEmailInput).subscribe(
       () => {
         this.success = true        
         this.router.navigate(['/home'])

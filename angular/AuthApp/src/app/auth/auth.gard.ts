@@ -8,7 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../service/auth-service.service';
-import { UserService } from '../service/user-service.service';
+import { AccountService } from '../service/account.service';
 
 
 @Injectable({
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private userService: UserService
+    private accountService: AccountService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot) :
@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate {
       console.log('Current User Role: ' + role)
 
       if (role) {
-        const match = this.userService.roleMatch(role);
+        const match = this.accountService.roleMatch(role);
 
         console.log('match: ', match);
         if (match) {

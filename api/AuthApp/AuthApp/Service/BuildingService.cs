@@ -2,7 +2,6 @@
 using AuthApp.Entity;
 using AuthApp.Repository;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace AuthApp.Service
 {   
@@ -13,10 +12,6 @@ namespace AuthApp.Service
         public BuildingService(AuthDBContext context) : base(context)
         {
             //this.logger = logger;
-        }
-
-        
-
-               
+        }       
     }
 }

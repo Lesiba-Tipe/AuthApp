@@ -95,6 +95,7 @@ namespace AuthApp
             services.AddAutoMapper(typeof(MapperConfig));
 
             //services.Configure<IEmailConfirmService>(Configuration.GetSection(""));
+
             // Add Swagger
             services.AddSwaggerGen(option =>
             {

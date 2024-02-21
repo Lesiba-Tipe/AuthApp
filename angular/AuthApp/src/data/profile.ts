@@ -10,5 +10,6 @@ export interface Profile {
     EmployeeNo: string;
     Department: string;
     Branch: string;
+    roles: any
 
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../service/user-service.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AccountService } from '../service/account.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -15,7 +16,7 @@ export class ResetPasswordComponent {
   resetPasswordInput: any
 
   constructor(
-    private userService: UserService,
+    private accountService: AccountService,
     private router: Router
   ) {
      
@@ -33,7 +34,7 @@ export class ResetPasswordComponent {
     if(resetPasswordForm.value){
       this.resetPasswordInput.password = resetPasswordForm.value.Password
       // Populate data
-      this.userService.resetPassword(this.resetPasswordInput).subscribe(
+      this.accountService.resetPassword(this.resetPasswordInput).subscribe(
         (response: any) => {
           //this.success = true;
           alert('Password have been reset successfully.')
